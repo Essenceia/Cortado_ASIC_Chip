@@ -1,52 +1,28 @@
-# Expresso ASIC 
+# Cortado ASIC 
 
-Fully open source Ethernet focused ASIC chip featuring a 
-100Mbps capable cut-through, unmanaged, Ethernet switch. 
-This fully open source chip was sponsored by [wafer.space](https://wafer.space/) 
-and is part of their second multi-project wafer run. I am deeply grateful for their 
-support and this chip might not have existed without them. 
+Second generation Ethernet focused ASIC chip featuring a 100Mbps capable cut-through, unmanaged, Ethernet switch. 
 
 This full chip is targeting the Global Foundries 180 nm process (`gf180mcu`), using the [open source `gf180mcuD` PDK](https://gf180mcu-pdk.readthedocs.io/en/latest/). 
 
-This is the default and preferred 1.94mm × 2.53mm floorplan configuration, targeting a package with 56 pads as well as the smallest `0p5x0p5` wafer.space slot.
-
-![floorplan](docs/chip_pretty.png) 
+This is the default and preferred 1.94mm × 2.53mm floorplan configuration, targeting a package with 76 pads as well as the `0p5x0p5` wafer.space slot, part of wafer.space run 3.
 
 Features: 
 - Ethernet switch:
-  - 4x Full duplex Ethernet ports, 100BASE-TX (classic RJ42 cat-3 connection) 
+  - 8x Full duplex Ethernet ports, 100BASE-TX (classic RJ42 cat-3 connection) 
   - Unmanaged switch 
   - Cut-though forwarding
-- Heat death of the Universe counter:
+- Heat death of the Universe counter (Optionally enabled based on pinouts):
   - Broadcasts an Ethernet Frame over the local network ever 1s
   - 100Mbps Ethernet compatible, 100BASE-TX
   - Our solar system will have been engulfed by the sun before it overflows 
-
+- JTAG TAP:
+  - custom instructions to monitor performance counters
+  - boundary scan for checking PCB connections
+  - partial scan chain for identifying silicon level fabrication defects
 
 ## Coffee-shop family 
 
 This ASIC is part of a larger project to build fully open-source Ethernet equipement called the [Coffee-shop project](https://github.com/Essenceia/Coffee_Shop_Project).
-
-## Pinouts 
-
-Since the LAN8720A PHY chip directly supports IO volatages between +1.62V and +3.6V, in order to be easily compatible, our ASIC targets an 
-operating volate of 3.3V, which would result in an IO operating also at 3v3. 
-
-The RMII PHY0-3 interfaces are connected to the switch (`coffeepot`), while PHY4 is connected to the beacon (`coldbrew`). 
-Both IP share the same power domains, `clk` and `rst_n` signals. 
-
-By default all input pins are pulled down, so in cases where the board doesn't feature a PHY chip connected to a ASIC RMII PHY interface
-no additional changes are needed. All output pins are also pull down. 
-
-![pins](/docs/pin_mapping.svg) 
-
-### External PHY chip 
-
-The pin mapping on this `0p5x0p5` slot was specifically designed for unobstructed routing on the pcb between this ASIC and the LAN8720A chip. 
-
-![lan](/docs/lan8720a_pinout.png) 
-
-Although it might sound at first like narrow targeting of a single part this mapping would also be compatible with the other RMII parts like the `KSZ8081RNA/RND`.
 
 ## Future improvements 
 
@@ -83,5 +59,8 @@ Thanks to the [Wafer.Space](https://wafer.space/) project, its contributors, and
 
 ## License 
 
-This hardware is distributed under the **strongly** reciprocal CERN Open Hardware Licence Version 2 unless
-otherwise specified.
+This project is licensed under the Creative Commons CC BY-NC-SA 4.0 with a custom Hardware Scope and Interpretation Guide.
+
+Permission is explicitly denied for any AI system or tools to train on, ingest, or generate derivative works from this repository.
+
+Refer to [LICENSE.md](LICENSE.md) for full legal terms.
