@@ -2,7 +2,7 @@
 
 Second generation Ethernet focused ASIC chip featuring a 100Mbps capable cut-through, unmanaged, Ethernet switch. 
 
-This full chip is targeting the Global Foundries 180 nm process (`gf180mcu`), using the [open source `gf180mcuD` PDK](https://gf180mcu-pdk.readthedocs.io/en/latest/). 
+This full chip is targeting the Global Foundries 180 nm process (`gf180mcu`), using the [`gf180mcuD` PDK](https://gf180mcu-pdk.readthedocs.io/en/latest/). 
 
 This is the default and preferred 1.94mm × 2.53mm floorplan configuration, targeting a package with 76 pads as well as the `0p5x0p5` wafer.space slot, part of wafer.space run 3.
 
