@@ -55,7 +55,7 @@ All code and design decisions are, and will remain, entirely human made.
 
 ## Credits
 
-Thanks to the [Wafer.Space](https://wafer.space/) project, its contributors, and all the community working on open source silicon tools for making this possible.
+Thanks to the [Wafer.Space](https://wafer.space/) project, its contributors for making this possible.
 
 ## License 
 
