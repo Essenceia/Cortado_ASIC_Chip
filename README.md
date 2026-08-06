@@ -22,11 +22,11 @@ Features:
 
 ## Coffee-shop family 
 
-This ASIC is part of a larger project to build fully open-source Ethernet equipement called the [Coffee-shop project](https://github.com/Essenceia/Coffee_Shop_Project).
+This ASIC is part of a larger project to build Ethernet equipement called the [Coffee-shop project](https://github.com/Essenceia/Coffee_Shop_Project).
 
 ## Future improvements 
 
-This is chip is part of a larger ongoing project to develop fully open source ethernet focused ASICs. 
+This is chip is part of a larger ongoing project to develop ethernet focused ASICs. 
 Future improvements will be focused on working towards a more powerfull and larger version of the switch. 
 
 Short-term changes: 
