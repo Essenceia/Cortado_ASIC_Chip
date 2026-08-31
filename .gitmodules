@@ -4,3 +4,6 @@
 [submodule "src/coldbrew"]
 	path = src/coldbrew
 	url = git@github.com:Essenceia/Until_Heat_Death_Do_Us_Part.git
+[submodule "src/MACSec"]
+	path = src/MACSec
+	url = git@github.com:Essenceia/MACSec.git
