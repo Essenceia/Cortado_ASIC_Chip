@@ -34,9 +34,6 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), "../src/coffeepot/test"))
 import coffeepot_tests
 
-sys.path.append(os.path.join(os.path.dirname(__file__), "../src/coldbrew/test"))
-import coldbrew_tests
-
 async def set_defaults(dut):
     dut.input_PAD.value = 0
 
@@ -160,22 +157,6 @@ async def coffeepot_close_rx_packets_test(dut):
     await start_up(dut)
     await coffeepot_tests.close_rx_packets_test_sequence(dut)
 
-# Coldbrew (heat death of the universe beacon) tb's
-# Tests are dissabled for gate level since real counter width is used 
-# and this would cause the test to need to simulate a full 1s to see a 
-# single packets
-@cocotb.test(skip=True if GATES else False)
-async def coldbrew_simple_tx_test(dut):
-    await start_up(dut)
-    await coldbrew_tests.simple_tx_test_sequence(dut, phy_idx = coldbrew_phy)    
-
-@cocotb.test(skip=True if GATES else False)
-async def coldbrew_update_eth_config(dut):
-    await start_up(dut)
-    coldbrew_module = dut.chip_top.i_chip_core.m_coldbrew
-    await coldbrew_tests.update_eth_config_sequence(dut, coldbrew_module, phy_idx = coldbrew_phy)
-
-
 def chip_top_runner():
 
     proj_path = Path(__file__).resolve().parent
@@ -221,16 +202,6 @@ def chip_top_runner():
         sources.append(coffeepot_path / "ttnn_timer.v")
         sources.append(coffeepot_path / "replacement_policy.v")
 
-        #coldbrew
-        coldbrew_path = proj_path / "../src/coldbrew/src"
-        sources.append(coldbrew_path / "broadcast_timer.v")
-        sources.append(coldbrew_path / "coldbrew.v")
-        sources.append(coldbrew_path / "crc_8.v")
-        sources.append(coldbrew_path / "death_of_the_universe_counter.v")
-        sources.append(coldbrew_path / "mac_conf.v")
-        sources.append(coldbrew_path / "mac_rx.v")
-        sources.append(coldbrew_path / "mac_tx.v")
-  
         # cocotb sim specific defs to reduce counter sizes and increase tb coverage 
         # applies to both coldbrew and coffeepot
         defines["COCOTB"] = True
