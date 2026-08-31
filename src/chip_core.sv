@@ -19,10 +19,7 @@ module chip_core #(
 `endif
 	localparam PORT_CNT        = 5, // total port cnd
 	localparam SWITCH_PORT_CNT = PORT_CNT - 1,
-	localparam PHY_W           = 2,
-
-	localparam MAC_W = 48,
-	parameter [MAC_W-1:0] COLDBREW_MAC = 48'h0090CF00CAFE 
+	localparam PHY_W           = 2
     )(
     `ifdef USE_POWER_PINS
     inout  wire VDD,
@@ -162,19 +159,17 @@ coffeepot #(.PORT_CNT(SWITCH_PORT_CNT), .PHY_W(PHY_W), .HAS_TX_PHASE(0)) m_coffe
 	.phy_tx_o(phy_tx[PHY_W*SWITCH_PORT_CNT-1:0])
 ); 
 
-coldbrew #(.PHY_W(2), .HAS_TX_PHASE(0), .DEFAULT_MAC(COLDBREW_MAC)) m_coldbrew(
-	.clk(clk), 
-	.rst_n(rst_n), 
 
-	.tx_phase_i(1'bX),
-	
-	.phy_rx_v_i(phy_rx_v[PORT_CNT-1]),
-	.phy_rx_err_i(phy_rx_err[PORT_CNT-1]),
-	.phy_rx_i(phy_rx[PHY_W*PORT_CNT-1-:PHY_W]),
+// unused phy port 
+wire phy_rx_v_unused, phy_rx_err_unused; 
+wire [PHY_W-1:0] phy_rx_unused;
 
-	.phy_tx_v_o(phy_tx_v[PORT_CNT-1]),
-	.phy_tx_o(phy_tx[PHY_W*PORT_CNT-1-:PHY_W])
-);
+assign phy_rx_v_unused   = phy_rx_v[PORT_CNT-1];
+assign phy_rx_err_unused = phy_rx_err[PORT_CNT-1];
+assign phy_rx_unused     = phy_rx[PHY_W*PORT_CNT-1-:PHY_W];
+
+assign phy_tx_v[PORT_CNT-1] = 1'b0;
+assign phy_tx[PHY_W*PORT_CNT-1-:PHY_W] = {PHY_W{1'b0}};
 
 endmodule
 
