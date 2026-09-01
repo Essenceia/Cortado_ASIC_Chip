@@ -7,3 +7,6 @@
 [submodule "src/MACSec"]
 	path = src/MACSec
 	url = git@github.com:Essenceia/MACSec.git
+[submodule "src/hazard3"]
+	path = src/hazard3
+	url = git@github.com:Essenceia/Hazard3_SoC.git
