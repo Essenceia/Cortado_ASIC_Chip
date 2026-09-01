@@ -50,5 +50,7 @@ synth_explore:
 	librelane $(LIBRELANE_CONFIG) --flow synthesisexploration 
 .PHONY: synth_explore
 
-
+clean: 
+	rm -r ./runs
+.PHONY:clean
 

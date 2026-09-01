@@ -61,9 +61,32 @@ PL_TARGET_DENSITY_PCT: 85
 
 # this is a macro, leave room for power routing
 PDN_MULTILAYER: false
+PDN_EXTEND_TO: "boundary"
 
-# Clock
 CLOCK_NET: clk
-CLOCK_PERIOD: 20 # 50 MHz
+CLOCK_PORT: clk
+CLOCK_PERIOD: 40 # 25 MHz
 
+VDD_NETS: [VPWR]
+GND_NETS: [VGND]
 
+# remove design repair
+RUN_POST_GPL_DESIGN_REPAIR: false
+RUN_POST_CTS_RESIZER_TIMING: false
+
+# save space
+BOTTOM_MARGIN_MULT: 1
+TOP_MARGIN_MULT: 1
+LEFT_MARGIN_MULT: 6
+RIGHT_MARGIN_MULT: 6
+
+GRT_ALLOW_CONGESTION: true
+
+# Add buffers
+DESIGN_REPAIR_BUFFER_INPUT_PORTS: False
+DESIGN_REPAIR_BUFFER_OUTPUT_PORTS: True
+
+# Use the minimum length for pins
+# that satisfies the minimum area constraint
+IO_PIN_H_LENGTH: null
+IO_PIN_V_LENGTH: null
