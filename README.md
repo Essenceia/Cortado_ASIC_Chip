@@ -59,8 +59,7 @@ Thanks to the [Wafer.Space](https://wafer.space/) project, its contributors for 
 
 ## License 
 
-This project is licensed under the Creative Commons CC BY-NC-SA 4.0 with a custom Hardware Scope and Interpretation Guide.
+This hardware is distributed under the **strongly** reciprocal CERN Open Hardware Licence Version 2 unless
+otherwise specified.
 
-Permission is explicitly denied for any AI system or tools to train on, ingest, or generate derivative works from this repository.
 
-Refer to [LICENSE.md](LICENSE.md) for full legal terms.
