@@ -5,6 +5,8 @@ CONF := conf
 WAIVER_FILE := waiver.vlt
 SRC_DIR=$(BASE_PATH)/src
 
+LIBRELANE_CONFIG=config.yaml
+
 # core + utils
 HAZARD_CORE_DIR=$(SRC_DIR)/hazard3/hdl
 
@@ -39,4 +41,14 @@ LINT_FLAGS := -Wpedantic
 lint: $(RTL_DEPS)
 	verilator $(CONF)/$(WAIVER_FILE) -y $(SRC_DIR) -y $(HAZARD_CORE_DIR) -DVERILATOR_LINT=1 --lint-only $(LINT_FLAGS) --no-timing $^ --top $(PROJECT_NAME)
 .PHONY: lint
+
+librelane: 
+	librelane $(LIBRELANE_CONFIG) 
+.PHONY: librelane
+
+synth_explore: 
+	librelane $(LIBRELANE_CONFIG) --flow synthesisexploration 
+.PHONY: synth_explore
+
+
 

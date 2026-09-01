@@ -44,7 +44,7 @@ parameter EXTENSION_C         = 1,
 parameter EXTENSION_E         = 1,
 
 // EXTENSION_M: Support for hardware multiply/divide/modulo instructions
-parameter EXTENSION_M         = 1,
+parameter EXTENSION_M         = 0,
 
 // EXTENSION_ZBA: Support for Zba address generation instructions
 parameter EXTENSION_ZBA       = 0,
