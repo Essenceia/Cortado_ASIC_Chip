@@ -10,7 +10,6 @@ HAZARD_CORE_DIR=$(SRC_DIR)/hazard3/hdl
 
 HAZARD_DEPS=$(HAZARD_CORE_DIR)/hazard3_core.v
 HAZARD_DEPS+=$(HAZARD_CORE_DIR)/hazard3_cpu_1port.v
-HAZARD_DEPS+=$(HAZARD_CORE_DIR)/hazard3_cpu_2port.v
 HAZARD_DEPS+=$(HAZARD_CORE_DIR)/arith/hazard3_alu.v
 HAZARD_DEPS+=$(HAZARD_CORE_DIR)/arith/hazard3_branchcmp.v
 HAZARD_DEPS+=$(HAZARD_CORE_DIR)/arith/hazard3_mul_fast.v

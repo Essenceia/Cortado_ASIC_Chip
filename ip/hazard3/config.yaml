@@ -1,13 +1,35 @@
 meta: 
-	version: 3
-	flow: Classic
+  version: 3
+  flow: Classic
 
-DESIGN_NAME: SoC
+DESIGN_NAME: soc
+
+VERILOG_INCLUDE_DIRS:
+- dir::../../src
+- dir::../../src/hazard3/hdl
+
 VERILOG_FILES:
-- dir::../../src/hazard3_config.vh
 - dir::../../src/soc.v
-- dir::../../src/hazard3/hdl/*.vh
-- dir::../../src/hazard3/hdl/*.v
+- dir::../../src/hazard3/hdl/hazard3_core.v
+- dir::../../src/hazard3/hdl/hazard3_cpu_1port.v
+- dir::../../src/hazard3/hdl/arith/hazard3_alu.v
+- dir::../../src/hazard3/hdl/arith/hazard3_branchcmp.v
+- dir::../../src/hazard3/hdl/arith/hazard3_mul_fast.v
+- dir::../../src/hazard3/hdl/arith/hazard3_muldiv_seq.v
+- dir::../../src/hazard3/hdl/arith/hazard3_onehot_encode.v
+- dir::../../src/hazard3/hdl/arith/hazard3_onehot_priority.v
+- dir::../../src/hazard3/hdl/arith/hazard3_onehot_priority_dynamic.v
+- dir::../../src/hazard3/hdl/arith/hazard3_priority_encode.v
+- dir::../../src/hazard3/hdl/arith/hazard3_shift_barrel.v
+- dir::../../src/hazard3/hdl/hazard3_csr.v
+- dir::../../src/hazard3/hdl/hazard3_decode.v
+- dir::../../src/hazard3/hdl/hazard3_frontend.v
+- dir::../../src/hazard3/hdl/hazard3_instr_decompress.v
+- dir::../../src/hazard3/hdl/hazard3_irq_ctrl.v
+- dir::../../src/hazard3/hdl/hazard3_pmp.v
+- dir::../../src/hazard3/hdl/hazard3_power_ctrl.v
+- dir::../../src/hazard3/hdl/hazard3_regfile_1w2r.v
+- dir::../../src/hazard3/hdl/hazard3_triggers.v
 
 DEFAULT_CORNER: nom_tt_025C_3v30
 STA_CORNERS: 
@@ -45,7 +67,7 @@ CELL_LIBS:
   '*_ss_125C_4v50':
     -  pdk_dir::libs.ref/gf180mcu_fd_sc_mcu7t5v0/lib/gf180mcu_fd_sc_mcu7t5v0__ss_125C_4v50.lib
 
-FP_SIZING: "absolute",
+FP_SIZING: "absolute"
 
 # Width should be multiple of 0.56 (Metal2 pitch)
 # Height should be multiple of 0.56 (Metal3 pitch)
