@@ -45,14 +45,19 @@ CELL_LIBS:
   '*_ss_125C_4v50':
     -  pdk_dir::libs.ref/gf180mcu_fd_sc_mcu7t5v0/lib/gf180mcu_fd_sc_mcu7t5v0__ss_125C_4v50.lib
 
-PL_TARGET_DENSITY_PCT: 50
+FP_SIZING: "absolute",
+
+# Width should be multiple of 0.56 (Metal2 pitch)
+# Height should be multiple of 0.56 (Metal3 pitch)
+# Standard cell row height: 3.92 (8 Metal3 track)
+DIE_AREA: [0, 0, 302.96, 73.92]
+PL_TARGET_DENSITY_PCT: 65
 
 # this is a macro, leave room for power routing
-PDN_MULTILAYER: False, 
+PDN_MULTILAYER: false
 
 # Clock
-CLOCK_PORT: clk_PAD
-CLOCK_NET: clk_pad/Y
+CLOCK_NET: clk
 CLOCK_PERIOD: 20 # 50 MHz
 
 
