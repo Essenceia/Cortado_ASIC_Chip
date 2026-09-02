@@ -11,6 +11,8 @@ meta:
     Netgen.LVS: null
     Checker.LVS: null
 
+SYNTH_AUTONAME: true
+
 LINTER_VLT: dir::waiver.vlt
  
 VERILOG_DEFINES:

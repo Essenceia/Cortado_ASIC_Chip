@@ -17,7 +17,7 @@ pdk::gf180mcuD:
   PL_TARGET_DENSITY_PCT: 95
 
 # remove design repair
-RUN_POST_GPL_DESIGN_REPAIR: false
+RUN_POST_GPL_DESIGN_REPAIR: true
 RUN_POST_CTS_RESIZER_TIMING: false
 
 # Add buffers

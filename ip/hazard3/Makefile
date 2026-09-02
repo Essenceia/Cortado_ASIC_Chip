@@ -39,7 +39,7 @@ RTL_DEPS+=$(SRC_DIR)/soc.v
 LINT_FLAGS := -Wpedantic
 
 # generate merged config files
-%_merged.yaml: %.yaml common_config.yaml
+%_config_merged.yaml: %_config.yaml common_config.yaml
 	cat common_config.yaml > $@
 	cat $< >> $@
 	
@@ -47,17 +47,25 @@ lint: $(RTL_DEPS)
 	verilator $(WAIVER_FILE) -y $(SRC_DIR) -y $(HAZARD_CORE_DIR) -DVERILATOR_LINT=1 --lint-only $(LINT_FLAGS) --no-timing $^ --top $(PROJECT_NAME)
 .PHONY: lint
 
-soc-librelane: soc_config_merged.yaml
+%-librelane: %_config_merged.yaml $(RTL_DEPS) common.sdc
 	librelane $<
-.PHONY: soc-librelane
+.PHONY: %-librelane
 
-rf-librelane: rf_config_merged.yaml
-	librelane $< 
-.PHONY: rf-librelane
+%-librelane-nodrc: %_config_merged.yaml $(RTL_DEPS) common.sdc
+	librelane $< --skip KLayout.DRC 
+.PHONY: %-librelane-nodrc
 
-soc_synth_explore: 
-	librelane $(SOC_LIBRELANE_CONFIG) --flow synthesisexploration 
-.PHONY: synth_explore
+%_synth_explore: %_config_merged.yaml $(RTL_DEPS)
+	librelane $< --flow synthesisexploration 
+.PHONY: soc_synth_explore rf_synth_explore
+
+%-librelane-openroad: %_config_merged.yaml
+	librelane $< --last-run --flow OpenInOpenROAD
+.PHONY: %-librelane-openroad
+
+%-librelane-klayout: %_config_merged.yaml      
+	librelane $< --last-run --flow OpenInKLayout
+.PHONY: %-librelane-klayout
 
 clean: 
 	rm -r ./runs
