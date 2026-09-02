@@ -1,6 +1,15 @@
 meta: 
   version: 3
   flow: Classic
+  substituting_steps:
+    # Save time during development
+    # Enable for sign-off
+    OpenROAD.IRDropReport: null
+    Magic.DRC: null
+    Checker.MagicDRC: null
+    KLayout.XOR: null
+    Netgen.LVS: null
+    Checker.LVS: null
 
 DESIGN_NAME: soc
 
@@ -53,11 +62,14 @@ CELL_LIBS:
 
 FP_SIZING: "absolute"
 
-# Width should be multiple of 0.56 (Metal2 pitch)
-# Height should be multiple of 0.56 (Metal3 pitch)
-# Standard cell row height: 3.92 (8 Metal3 track)
-DIE_AREA: [0, 0, 420.0, 672.0]
-PL_TARGET_DENSITY_PCT: 85
+pdk::gf180mcuD:
+  # Routing
+  RT_MAX_LAYER: Metal4
+  # Width should be multiple of 0.56 (Metal2 pitch)
+  # Height should be multiple of 0.56 (Metal3 pitch)
+  # Standard cell row height: 3.92 (8 Metal3 track)
+  DIE_AREA: [0, 0, 420.0, 840.0]
+  PL_TARGET_DENSITY_PCT: 65
 
 # this is a macro, leave room for power routing
 PDN_MULTILAYER: false
@@ -72,7 +84,7 @@ GND_NETS: [VGND]
 
 # remove design repair
 RUN_POST_GPL_DESIGN_REPAIR: false
-RUN_POST_CTS_RESIZER_TIMING: false
+RUN_POST_CTS_RESIZER_TIMING: true
 
 # save space
 BOTTOM_MARGIN_MULT: 1
