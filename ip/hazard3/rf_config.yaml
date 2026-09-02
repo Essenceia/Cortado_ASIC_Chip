@@ -1,0 +1,26 @@
+DESIGN_NAME: hazard3_regfile_1w2r
+
+VERILOG_INCLUDE_DIRS:
+- dir::../../src
+- dir::../../src/hazard3/hdl
+
+VERILOG_FILES:
+- dir::../../src/hazard3/hdl/hazard3_regfile_1w2r.v
+
+pdk::gf180mcuD:
+  # Routing
+  RT_MAX_LAYER: Metal4
+  # Width should be multiple of 0.56 (Metal2 pitch)
+  # Height should be multiple of 0.56 (Metal3 pitch)
+  # Standard cell row height: 3.92 (8 Metal3 track)
+  DIE_AREA: [0, 0, 313.6, 620.0]
+  PL_TARGET_DENSITY_PCT: 95
+
+# remove design repair
+RUN_POST_GPL_DESIGN_REPAIR: false
+RUN_POST_CTS_RESIZER_TIMING: false
+
+# Add buffers
+DESIGN_REPAIR_BUFFER_INPUT_PORTS: False
+DESIGN_REPAIR_BUFFER_OUTPUT_PORTS: True
+

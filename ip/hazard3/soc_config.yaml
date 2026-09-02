@@ -1,16 +1,3 @@
-meta: 
-  version: 3
-  flow: Classic
-  substituting_steps:
-    # Save time during development
-    # Enable for sign-off
-    OpenROAD.IRDropReport: null
-    Magic.DRC: null
-    Checker.MagicDRC: null
-    KLayout.XOR: null
-    Netgen.LVS: null
-    Checker.LVS: null
-
 DESIGN_NAME: soc
 
 VERILOG_INCLUDE_DIRS:
@@ -40,28 +27,6 @@ VERILOG_FILES:
 - dir::../../src/hazard3/hdl/hazard3_regfile_1w2r.v
 - dir::../../src/hazard3/hdl/hazard3_triggers.v
 
-DEFAULT_CORNER: nom_tt_025C_3v30
-STA_CORNERS: 
-- nom_tt_025C_3v30
-- nom_ss_125C_3v00
-- nom_ff_n40C_3v60
-- min_tt_025C_3v30
-- min_ss_125C_3v00
-- min_ff_n40C_3v60
-- max_tt_025C_3v30
-- max_ss_125C_3v00
-- max_ff_n40C_3v60
-
-CELL_LIBS:
-  '*_tt_025C_3v30':
-    - pdk_dir::libs.ref/gf180mcu_fd_sc_mcu7t5v0/lib/gf180mcu_fd_sc_mcu7t5v0__tt_025C_3v30.lib
-  '*_ff_n40C_3v60':
-    - pdk_dir::libs.ref/gf180mcu_fd_sc_mcu7t5v0/lib/gf180mcu_fd_sc_mcu7t5v0__ff_n40C_3v60.lib
-  '*_ss_125C_3v00':
-    - pdk_dir::libs.ref/gf180mcu_fd_sc_mcu7t5v0/lib/gf180mcu_fd_sc_mcu7t5v0__ss_125C_3v00.lib
-
-FP_SIZING: "absolute"
-
 pdk::gf180mcuD:
   # Routing
   RT_MAX_LAYER: Metal4
@@ -71,34 +36,11 @@ pdk::gf180mcuD:
   DIE_AREA: [0, 0, 420.0, 840.0]
   PL_TARGET_DENSITY_PCT: 65
 
-# this is a macro, leave room for power routing
-PDN_MULTILAYER: false
-PDN_EXTEND_TO: "boundary"
-
-CLOCK_NET: clk
-CLOCK_PORT: clk
-CLOCK_PERIOD: 40 # 25 MHz
-
-VDD_NETS: [VPWR]
-GND_NETS: [VGND]
-
 # remove design repair
 RUN_POST_GPL_DESIGN_REPAIR: false
 RUN_POST_CTS_RESIZER_TIMING: true
-
-# save space
-BOTTOM_MARGIN_MULT: 1
-TOP_MARGIN_MULT: 1
-LEFT_MARGIN_MULT: 6
-RIGHT_MARGIN_MULT: 6
-
-GRT_ALLOW_CONGESTION: true
 
 # Add buffers
 DESIGN_REPAIR_BUFFER_INPUT_PORTS: False
 DESIGN_REPAIR_BUFFER_OUTPUT_PORTS: True
 
-# Use the minimum length for pins
-# that satisfies the minimum area constraint
-IO_PIN_H_LENGTH: null
-IO_PIN_V_LENGTH: null

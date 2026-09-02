@@ -1,11 +1,11 @@
 PROJECT_NAME=soc
 
 BASE_PATH=../..
-CONF := conf
 WAIVER_FILE := waiver.vlt
 SRC_DIR=$(BASE_PATH)/src
 
-LIBRELANE_CONFIG=config.yaml
+SOC_LIBRELANE_CONFIG=soc_config.yaml
+RF_LIBRELANE_CONFIG=rf_config.yaml
 
 # core + utils
 HAZARD_CORE_DIR=$(SRC_DIR)/hazard3/hdl
@@ -38,19 +38,29 @@ RTL_DEPS+=$(SRC_DIR)/soc.v
 
 LINT_FLAGS := -Wpedantic
 
+# generate merged config files
+%_merged.yaml: %.yaml common_config.yaml
+	cat common_config.yaml > $@
+	cat $< >> $@
+	
 lint: $(RTL_DEPS)
-	verilator $(CONF)/$(WAIVER_FILE) -y $(SRC_DIR) -y $(HAZARD_CORE_DIR) -DVERILATOR_LINT=1 --lint-only $(LINT_FLAGS) --no-timing $^ --top $(PROJECT_NAME)
+	verilator $(WAIVER_FILE) -y $(SRC_DIR) -y $(HAZARD_CORE_DIR) -DVERILATOR_LINT=1 --lint-only $(LINT_FLAGS) --no-timing $^ --top $(PROJECT_NAME)
 .PHONY: lint
 
-librelane: 
-	librelane $(LIBRELANE_CONFIG) 
-.PHONY: librelane
+soc-librelane: soc_config_merged.yaml
+	librelane $<
+.PHONY: soc-librelane
 
-synth_explore: 
-	librelane $(LIBRELANE_CONFIG) --flow synthesisexploration 
+rf-librelane: rf_config_merged.yaml
+	librelane $< 
+.PHONY: rf-librelane
+
+soc_synth_explore: 
+	librelane $(SOC_LIBRELANE_CONFIG) --flow synthesisexploration 
 .PHONY: synth_explore
 
 clean: 
 	rm -r ./runs
+	rm -r ./*config_merged.yaml
 .PHONY:clean
 
