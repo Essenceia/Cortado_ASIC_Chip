@@ -24,23 +24,29 @@ VERILOG_FILES:
 - dir::../../src/hazard3/hdl/hazard3_irq_ctrl.v
 - dir::../../src/hazard3/hdl/hazard3_pmp.v
 - dir::../../src/hazard3/hdl/hazard3_power_ctrl.v
-- dir::../../src/hazard3/hdl/hazard3_regfile_1w2r.v
 - dir::../../src/hazard3/hdl/hazard3_triggers.v
 
-SYNTH_STRATEGY: "AREA 3"
+SYNTH_STRATEGY: "DELAY 4"
+
+VERILOG_DEFINES:
+- NOCLOCKGATES
+- GF180MCU
+- USE_POWER_PINS
+- EXTERNAL_REGFILE 
 
 STD_CELL_LIBRARY: gf180mcu_fd_sc_mcu9t5v0
+
 pdk::gf180mcuD:
   # Routing
   RT_MAX_LAYER: Metal4
   # Width should be multiple of 0.56 (Metal2 pitch)
   # Height should be multiple of 0.56 (Metal3 pitch)
   # Standard cell row height: 3.92 (8 Metal3 track)
-  DIE_AREA: [0, 0, 560.0, 700.0]
-  PL_TARGET_DENSITY_PCT: 50
+  DIE_AREA: [0, 0, 280.0, 620.0]
+  PL_TARGET_DENSITY_PCT: 85
 
 # fix timing
-RUN_POST_CTS_RESIZER_TIMING: true
+RUN_POST_CTS_RESIZER_TIMING: false
 
 # Add buffers
 RUN_POST_GPL_DESIGN_REPAIR: false
