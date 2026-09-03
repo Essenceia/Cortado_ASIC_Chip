@@ -62,6 +62,35 @@ wire [W_DATA-1:0] dbg_sbus_rdata_unused;
 reg rst_d1_q; 
 always @(posedge clk) 
 	rst_d1_q <= rst_n; 
+
+`ifdef EXTERNAL_REGILE
+// external regfile
+wire [W_REGADDR-1:0] rf_raddr1; 
+reg  [W_DATA-1:0]    rf_rdata1;
+wire [W_REGADDR-1:0] rf_raddr2; 
+reg  [W_DATA-1:0]    rf_rdata2;
+wire [W_REGADDR-1:0] rf_waddr; 
+wire [W_DATA-1:0]    rf_wdata;
+wire                 rf_wen;
+
+hazard3_regfile_1w2r #(
+`include "hazard3_config_inst.vh"
+) regs (
+	.clk    (clk),
+	.rst_n  (rst_d1_q),
+	// On downstream stall, we feed D's addresses back into regfile
+	// so that output does not change.
+	// GF180MCU: use fine rather than coarse predecode as the we rely on the
+	// regfile read port for zeroing x0.
+	.raddr1 (rf_raddr1),
+	.rdata1 (rf_rdata1),
+	.raddr2 (rf_raddr2),
+	.rdata2 (rf_rdata2),
+	.waddr  (rf_waddr),
+	.wdata  (rf_wdata),
+	.wen    (rf_wen)
+);
+`endif
  
 hazard3_cpu_1port #(
 	// These must have the values given here for you to end up with a useful SoC:
@@ -122,6 +151,16 @@ hazard3_cpu_1port #(
 	.unblock_out                (unblock_out),
 	.unblock_in                 (unblock_out), // Tied back
 
+	`ifdef EXTERNAL_REGILE 
+	.raddr1_o(rf_raddr1), 
+	.raddr1_i(rf_raddr1),
+	.raddr2_o(rf_radd2), 
+	.raddr2_i(rf_raddr2),
+	.waddr_o (rf_waddr), 
+	.wdata_o (rf_wdata), 
+	.wen_o   (rf_wen),
+	`endif
+
 	// AMB5 port 
 	.haddr                      (haddr_o),
 	.hwrite                     (hwrite_o),
@@ -173,4 +212,5 @@ hazard3_cpu_1port #(
 	.soft_irq                   (soft_irq_i),
 	.timer_irq                  (timer_irq_i)
 );
+
 endmodule
