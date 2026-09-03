@@ -29,21 +29,24 @@ VERILOG_FILES:
 
 SYNTH_STRATEGY: "AREA 3"
 
+STD_CELL_LIBRARY: gf180mcu_fd_sc_mcu9t5v0
 pdk::gf180mcuD:
   # Routing
   RT_MAX_LAYER: Metal4
   # Width should be multiple of 0.56 (Metal2 pitch)
   # Height should be multiple of 0.56 (Metal3 pitch)
   # Standard cell row height: 3.92 (8 Metal3 track)
-  DIE_AREA: [0, 0, 420.0, 700.0]
-  PL_TARGET_DENSITY_PCT: 95
+  DIE_AREA: [0, 0, 560.0, 700.0]
+  PL_TARGET_DENSITY_PCT: 50
 
 # fix timing
-RUN_POST_CTS_RESIZER_TIMING: true
+RUN_POST_CTS_RESIZER_TIMING: false
 
 # Add buffers
 RUN_POST_GPL_DESIGN_REPAIR: false
 DESIGN_REPAIR_BUFFER_INPUT_PORTS: False
 DESIGN_REPAIR_BUFFER_OUTPUT_PORTS: False
+DESIGN_REPAIR_MAX_SLEW_PCT: 1
+DESIGN_REPAIR_MAX_CAP_PCT: 0
 
 

@@ -32,13 +32,22 @@ STA_CORNERS:
 - max_ss_125C_3v00
 - max_ff_n40C_3v60
 
-CELL_LIBS:
-  '*_tt_025C_3v30':
-    - pdk_dir::libs.ref/gf180mcu_fd_sc_mcu7t5v0/lib/gf180mcu_fd_sc_mcu7t5v0__tt_025C_3v30.lib
-  '*_ff_n40C_3v60':
-    - pdk_dir::libs.ref/gf180mcu_fd_sc_mcu7t5v0/lib/gf180mcu_fd_sc_mcu7t5v0__ff_n40C_3v60.lib
-  '*_ss_125C_3v00':
-    - pdk_dir::libs.ref/gf180mcu_fd_sc_mcu7t5v0/lib/gf180mcu_fd_sc_mcu7t5v0__ss_125C_3v00.lib
+scl::gf180mcu_fd_sc_mcu7t5v0:
+  CELL_LIBS:
+    '*_tt_025C_3v30':
+      - pdk_dir::libs.ref/gf180mcu_fd_sc_mcu7t5v0/lib/gf180mcu_fd_sc_mcu7t5v0__tt_025C_3v30.lib
+    '*_ff_n40C_3v60':
+      - pdk_dir::libs.ref/gf180mcu_fd_sc_mcu7t5v0/lib/gf180mcu_fd_sc_mcu7t5v0__ff_n40C_3v60.lib
+    '*_ss_125C_3v00':
+      - pdk_dir::libs.ref/gf180mcu_fd_sc_mcu7t5v0/lib/gf180mcu_fd_sc_mcu7t5v0__ss_125C_3v00.lib
+scl::gf180mcu_fd_sc_mcu9t5v0:
+  CELL_LIBS:
+    '*_tt_025C_3v30':
+      - pdk_dir::libs.ref/gf180mcu_fd_sc_mcu9t5v0/lib/gf180mcu_fd_sc_mcu9t5v0__tt_025C_3v30.lib
+    '*_ff_n40C_3v60':
+      - pdk_dir::libs.ref/gf180mcu_fd_sc_mcu9t5v0/lib/gf180mcu_fd_sc_mcu9t5v0__ff_n40C_3v60.lib
+    '*_ss_125C_3v00':
+      - pdk_dir::libs.ref/gf180mcu_fd_sc_mcu9t5v0/lib/gf180mcu_fd_sc_mcu9t5v0__ss_125C_3v00.lib
 
 FP_SIZING: "absolute"
 
@@ -69,3 +78,15 @@ GRT_ALLOW_CONGESTION: true
 # that satisfies the minimum area constraint
 IO_PIN_H_LENGTH: null
 IO_PIN_V_LENGTH: null
+
+
+# Why is this not the default???
+# abc cmd: upsize {D};dnsize {D}
+SYNTH_SIZING: True
+# Takes precedence over previous
+# abc cmd: f"buffer -N {self.max_fanout}{max_tr_arg};upsize {{D}};dnsize {{D}}"
+# (where self.max_fanout comes from config["MAX_FANOUT_CONSTRAINT"])
+SYNTH_ABC_BUFFERING: True
+# Strip out buffers inserted by ABC and re-buffer after global placement. The
+# synthesis buffers are just there to get a better guess for GPL.
+DESIGN_REPAIR_REMOVE_BUFFERS: True

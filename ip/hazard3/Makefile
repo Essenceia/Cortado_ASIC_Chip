@@ -37,10 +37,8 @@ RTL_DEPS+=$(SRC_DIR)/soc.v
 CONFIG_DEPS=$(SRC_DIR)/hazard3_config.vh
 CONFIG_DEPS+=$(HAZARD_CORE_DIR)/$(wildcard *.vh)
 
-#LINT_FLAGS := -Wall -Wpedantic -Ilib
-
-LINT_FLAGS := -Wpedantic
-LINT_DEFINES = -DVERILATOR_LINT=1 -DGF180MCU=1 -DEXTERNAL_REGFILE
+LINT_FLAGS := -Wall -Wpedantic
+LINT_DEFINES = -DVERILATOR_LINT=1 -DGF180MCU=1 #-DEXTERNAL_REGFILE
 # generate merged config files
 soc_config_merged.yaml soc_extern_rf_config_merged.yaml rf_config_merged.yaml: %_config_merged.yaml: %_config.yaml common_config.yaml
 	cat common_config.yaml > $@
@@ -54,7 +52,7 @@ soc_librelane soc_extern_rf_librelane rf_librelane: %-librelane: %_config_merged
 	librelane $<
 .PHONY: %-librelane
 
-soc_librelane-nodrc soc_extern_rf_librelane-nodrc rf_librelane-nodrc:%-librelane-nodrc: %_config_merged.yaml $(RTL_DEPS) $(CONFIG_DEPS) common.sdc
+soc-librelane-nodrc soc_extern_rf-librelane-nodrc rf-librelane-nodrc:%-librelane-nodrc: %_config_merged.yaml $(RTL_DEPS) $(CONFIG_DEPS) common.sdc
 	librelane $< --skip KLayout.DRC 
 .PHONY: %-librelane-nodrc
 
