@@ -42,6 +42,9 @@ LINT_FLAGS := -Wpedantic
 %_config_merged.yaml: %_config.yaml common_config.yaml
 	cat common_config.yaml > $@
 	cat $< >> $@
+
+config: rf_config_merged.yaml soc_config_merged.yaml
+.PHONY: config
 	
 lint: $(RTL_DEPS)
 	verilator $(WAIVER_FILE) -y $(SRC_DIR) -y $(HAZARD_CORE_DIR) -DVERILATOR_LINT=1 --lint-only $(LINT_FLAGS) --no-timing $^ --top $(PROJECT_NAME)
