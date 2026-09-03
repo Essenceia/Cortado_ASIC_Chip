@@ -57,7 +57,7 @@ PDN_EXTEND_TO: "boundary"
 
 CLOCK_NET: clk
 CLOCK_PORT: clk
-CLOCK_PERIOD: 40 # 25 MHz
+CLOCK_PERIOD: 100 # 10 MHz - we are going to be heavily memory bottlenecked by the sram over spi anyways
 
 PNR_SDC_FILE: dir::common.sdc
 SIGNOFF_SDC_FILE: dir::common.sdc

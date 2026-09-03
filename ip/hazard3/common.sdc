@@ -1,6 +1,6 @@
 source $::env(SCRIPTS_DIR)/base.sdc
 
-set_max_fanout 16 [current_design] 
+# set_max_fanout 16 [current_design] 
  
 # code and comment stolled from RISCBoy-180, ofcourse I stole the comment, 
 # what did you expect ? 
