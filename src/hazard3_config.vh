@@ -163,11 +163,11 @@ parameter PMP_HARDWIRED_CFG   = {(PMP_REGIONS > 0 ? PMP_REGIONS : 1){8'h00}},
 // DEBUG_SUPPORT: Support for run/halt and instruction injection from an
 // external Debug Module, support for Debug Mode, and Debug Mode CSRs.
 // Requires: CSR_M_MANDATORY, CSR_M_TRAP.
-parameter DEBUG_SUPPORT       = 0,
+parameter DEBUG_SUPPORT       = 1,
 
 // BREAKPOINT_TRIGGERS: Number of triggers which support type=2 execute=1
 // (but not store/load=1, i.e. not a watchpoint). Requires: DEBUG_SUPPORT
-parameter BREAKPOINT_TRIGGERS = 0,
+parameter BREAKPOINT_TRIGGERS = 1,
 
 // ----------------------------------------------------------------------------
 // External interrupt support
