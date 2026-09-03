@@ -58,6 +58,10 @@ wire fence_d_vld_unused;
 wire dbg_sbus_rdy_unused; 
 wire dbg_sbus_err_unused; 
 wire [W_DATA-1:0] dbg_sbus_rdata_unused;
+
+reg rst_d1_q; 
+always @(posedge clk) 
+	rst_d1_q <= rst_n; 
  
 hazard3_cpu_1port #(
 	// These must have the values given here for you to end up with a useful SoC:
@@ -110,7 +114,7 @@ hazard3_cpu_1port #(
 ) cpu (
 	.clk                        (clk),
 	.clk_always_on              (clk),
-	.rst_n                      (rst_n),
+	.rst_n                      (rst_d1_q),
 
 	.pwrup_req                  (pwrup_req),
 	.pwrup_ack                  (pwrup_req),   // Tied back

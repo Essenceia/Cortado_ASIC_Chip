@@ -37,7 +37,7 @@ parameter MTVEC_INIT          = 32'h00000000,
 parameter EXTENSION_A         = 1,
 
 // EXTENSION_C: Support for compressed (variable-width) instructions
-parameter EXTENSION_C         = 1,
+parameter EXTENSION_C         = 0,
 
 // EXTENSION_E: Implement the RV32E base extension rather than RV32I. This
 // reduces the number of integer registers from 31 to 15.
@@ -205,7 +205,7 @@ parameter MCONFIGPTR_VAL      = 32'h0,
 
 // REDUCED_BYPASS: Remove all forwarding paths except X->X (so back-to-back
 // ALU ops can still run at 1 CPI), to save area.
-parameter REDUCED_BYPASS      = 0,
+parameter REDUCED_BYPASS      = 1,
 
 // MULDIV_UNROLL: Bits per clock for multiply/divide circuit, if present. Must
 // be a power of 2.
@@ -228,7 +228,7 @@ parameter MULH_FAST           = 0,
 // FAST_BRANCHCMP: Instantiate a separate comparator (eq/lt/ltu) for branch
 // comparisons, rather than using the ALU. Improves fetch address delay,
 // especially if Zba extension is enabled. Disabling may save area.
-parameter FAST_BRANCHCMP      = 1,
+parameter FAST_BRANCHCMP      = 0,
 
 // RESET_REGFILE: whether to support reset of the general purpose registers.
 // There are around 1k bits in the register file, so the reset can be
