@@ -27,6 +27,8 @@ VERILOG_FILES:
 - dir::../../src/hazard3/hdl/hazard3_regfile_1w2r.v
 - dir::../../src/hazard3/hdl/hazard3_triggers.v
 
+SYNTH_STRATEGY: "AREA 3"
+
 pdk::gf180mcuD:
   # Routing
   RT_MAX_LAYER: Metal4

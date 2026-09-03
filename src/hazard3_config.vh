@@ -34,7 +34,7 @@ parameter MTVEC_INIT          = 32'h00000000,
 // Standard RISC-V ISA support
 
 // EXTENSION_A: Support for atomic read/modify/write instructions
-parameter EXTENSION_A         = 1,
+parameter EXTENSION_A         = 0,
 
 // EXTENSION_C: Support for compressed (variable-width) instructions
 parameter EXTENSION_C         = 0,

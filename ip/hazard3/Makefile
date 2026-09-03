@@ -34,6 +34,8 @@ HAZARD_DEPS+=$(HAZARD_CORE_DIR)/hazard3_triggers.v
 RTL_DEPS=$(HAZARD_DEPS)
 RTL_DEPS+=$(SRC_DIR)/soc.v
 
+CONFIG_DEPS=$(SRC_DIR)/hazard3_config.vh
+
 #LINT_FLAGS := -Wall -Wpedantic -Ilib
 
 LINT_FLAGS := -Wpedantic
@@ -42,25 +44,22 @@ LINT_FLAGS := -Wpedantic
 %_config_merged.yaml: %_config.yaml common_config.yaml
 	cat common_config.yaml > $@
 	cat $< >> $@
-
-config: rf_config_merged.yaml soc_config_merged.yaml
-.PHONY: config
 	
-lint: $(RTL_DEPS)
+lint: $(RTL_DEPS) $(CONFIG_DEPS) 
 	verilator $(WAIVER_FILE) -y $(SRC_DIR) -y $(HAZARD_CORE_DIR) -DVERILATOR_LINT=1 --lint-only $(LINT_FLAGS) --no-timing $^ --top $(PROJECT_NAME)
 .PHONY: lint
 
-%-librelane: %_config_merged.yaml $(RTL_DEPS) common.sdc
+%-librelane: %_config_merged.yaml $(RTL_DEPS) $(CONFIG_DEPS) common.sdc
 	librelane $<
 .PHONY: %-librelane
 
-%-librelane-nodrc: %_config_merged.yaml $(RTL_DEPS) common.sdc
+%-librelane-nodrc: %_config_merged.yaml $(RTL_DEPS) $(CONFIG_DEPS) common.sdc
 	librelane $< --skip KLayout.DRC 
 .PHONY: %-librelane-nodrc
 
-%_synth_explore: %_config_merged.yaml $(RTL_DEPS)
+soc_synth_explore rf_synth_explore: %_synth_explore: %_config_merged.yaml $(RTL_DEPS) $(CONFIG_DEPS) 
 	librelane $< --flow synthesisexploration 
-.PHONY: soc_synth_explore rf_synth_explore
+.PHONY:soc_synth_explore rf_synth_explore 
 
 %-librelane-openroad: %_config_merged.yaml
 	librelane $< --last-run --flow OpenInOpenROAD
