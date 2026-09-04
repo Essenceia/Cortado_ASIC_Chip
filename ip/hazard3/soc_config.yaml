@@ -26,6 +26,11 @@ VERILOG_FILES:
 - dir::../../src/hazard3/hdl/hazard3_power_ctrl.v
 - dir::../../src/hazard3/hdl/hazard3_regfile_1w2r.v
 - dir::../../src/hazard3/hdl/hazard3_triggers.v
+- dir::../../src/hazard3/hdl/hazard3/debug/dtm/hazard3_jtag_dtm_core.v
+- dir::../../src/hazard3/hdl/hazard3/debug/cdc/hazard3_apb_async_bridge.v
+- dir::../../src/hazard3/hdl/hazard3/debug/cdc/hazard3_reset_sync.v
+- dir::../../src/hazard3/hdl/hazard3/debug/cdc/hazard3_sync_1bit.v
+
 
 SYNTH_STRATEGY: "AREA 3"
 

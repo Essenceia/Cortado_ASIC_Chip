@@ -3,6 +3,7 @@ PROJECT_NAME=soc
 BASE_PATH=../..
 WAIVER_FILE := waiver.vlt
 SRC_DIR=$(BASE_PATH)/src
+PHONY_STD_PATH=../../lib
 
 SOC_LIBRELANE_CONFIG=soc_config.yaml
 RF_LIBRELANE_CONFIG=rf_config.yaml
@@ -30,6 +31,10 @@ HAZARD_DEPS+=$(HAZARD_CORE_DIR)/hazard3_pmp.v
 HAZARD_DEPS+=$(HAZARD_CORE_DIR)/hazard3_power_ctrl.v
 HAZARD_DEPS+=$(HAZARD_CORE_DIR)/hazard3_regfile_1w2r.v
 HAZARD_DEPS+=$(HAZARD_CORE_DIR)/hazard3_triggers.v
+HAZARD_DEPS+=$(HAZARD_CORE_DIR)/debug/cdc/hazard3_sync_1bit.v
+HAZARD_DEPS+=$(HAZARD_CORE_DIR)/debug/cdc/hazard3_reset_sync.v
+HAZARD_DEPS+=$(HAZARD_CORE_DIR)/debug/cdc/hazard3_apb_async_bridge.v
+HAZARD_DEPS+=$(HAZARD_CORE_DIR)/debug/dtm/hazard3_jtag_dtm_core.v
 
 RTL_DEPS=$(HAZARD_DEPS)
 RTL_DEPS+=$(SRC_DIR)/soc.v
@@ -37,15 +42,22 @@ RTL_DEPS+=$(SRC_DIR)/soc.v
 CONFIG_DEPS=$(SRC_DIR)/hazard3_config.vh
 CONFIG_DEPS+=$(HAZARD_CORE_DIR)/$(wildcard *.vh)
 
+PHONY_STD_LIB=$(PHONY_STD_PATH)/gf180mcu_fd_sc_phony.v
+
 LINT_FLAGS := -Wall -Wpedantic
 LINT_DEFINES = -DVERILATOR_LINT=1 -DGF180MCU=1 #-DEXTERNAL_REGFILE
+
+LINT_INCLUDE_DIR = -y $(SRC_DIR) -y $(HAZARD_CORE_DIR) 
+LINT_INCLUDE_DIR += -y $(HAZARD_CORE_DIR)/debug/cdc -y $(HAZARD_CORE_DIR)/debug/dtm
+LINT_INCLUDE_DIR += -y $(PHONY_STD_PATH)
+
 # generate merged config files
 soc_config_merged.yaml soc_extern_rf_config_merged.yaml rf_config_merged.yaml: %_config_merged.yaml: %_config.yaml common_config.yaml
 	cat common_config.yaml > $@
 	cat $< >> $@
 	
 lint: $(RTL_DEPS) 
-	verilator $(WAIVER_FILE) -y $(SRC_DIR) -y $(HAZARD_CORE_DIR) -DVERILATOR_LINT=1 --lint-only $(LINT_FLAGS) --no-timing $^ --top $(PROJECT_NAME)
+	verilator $(WAIVER_FILE) $(LINT_INCLUDE_DIR) $(LINT_DEFINES) --lint-only $(LINT_FLAGS) --no-timing $^ $(PHONY_STD_LIB) --top $(PROJECT_NAME)
 .PHONY: lint
 
 soc_librelane soc_extern_rf_librelane rf_librelane: %-librelane: %_config_merged.yaml $(RTL_DEPS) $(CONFIG_DEPS) common.sdc

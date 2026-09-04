@@ -5,21 +5,23 @@
 `default_nettype none
 
 module soc #(
-	parameter W_PADDR         = 9,
-	parameter DTMCS_IDLE_HINT = 3'd4,
+	parameter  W_PADDR         = 9,
+	localparam ABITS           = W_PADDR - 2, // do not modify
+	localparam W_DR_SHIFT      = ABITS + 32 + 2, // seriously don't touch
+	parameter  DTMCS_IDLE_HINT = 3'd4,
 	`include "hazard3_config.vh"
 ) (
 	input wire               clk,
 	input wire               rst_n,
 
 	// from jtag tap
-	input  wire                  tck_i,
-	input  wire                  trst_n_i,
-	input  wire                  dtm_wen_i,
-	input  wire                  dtm_ren_i,
-	input  wire                  dtm_sel_dmi_ndtmcs_i, 
-	input  wire [W_DR_SHIFT-1:0] dtm_wdata_i,
-	output wire [W_DR_SHIFT-1:0] dtm_rdata_o,
+	input  wire                  tck,
+	input  wire                  trst_n,
+	input  wire                  dr_wen_i,
+	input  wire                  dr_ren_i,
+	input  wire                  dr_sel_dmi_ndtmcs_i, 
+	input  wire [W_DR_SHIFT-1:0] dr_wdata_i,
+	output wire [W_DR_SHIFT-1:0] dr_rdata_o,
 
 	// AHB5 Master port
 	output reg  [W_ADDR-1:0]  haddr_o,
@@ -107,7 +109,7 @@ wire              dmi_pslverr;
 
 hazard3_jtag_dtm_core #(
 	.DTMCS_IDLE_HINT (DTMCS_IDLE_HINT),
-	.W_PADDR(W_PADDR)
+	.W_ADDR(ABITS)
 ) dtm_core (
 	.tck               (tck),
 	.trst_n            (trst_n),
@@ -116,11 +118,11 @@ hazard3_jtag_dtm_core #(
 
 	.dmihardreset_req  (dmihardreset_req),
 
-	.dr_wen            (dtm_wen_i),
-	.dr_ren            (dtm_ren_i),
-	.dr_sel_dmi_ndtmcs (dtm_sel_dmi_ndtmcs_i),
-	.dr_wdata          (dtm_wdata_i),
-	.dr_rdata          (dtm_rdata_o),
+	.dr_wen            (dr_wen_i),
+	.dr_ren            (dr_ren_i),
+	.dr_sel_dmi_ndtmcs (dr_sel_dmi_ndtmcs_i),
+	.dr_wdata          (dr_wdata_i),
+	.dr_rdata          (dr_rdata_o),
 
 	.dmi_psel          (dmi_psel),
 	.dmi_penable       (dmi_penable),
