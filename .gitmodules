@@ -10,3 +10,4 @@
 [submodule "src/hazard3"]
 	path = src/hazard3
 	url = git@github.com:Essenceia/Hazard3_SoC.git
+	shallow = true
