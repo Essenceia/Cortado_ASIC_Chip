@@ -79,7 +79,6 @@ GRT_ALLOW_CONGESTION: true
 IO_PIN_H_LENGTH: null
 IO_PIN_V_LENGTH: null
 
-
 # Why is this not the default???
 # abc cmd: upsize {D};dnsize {D}
 SYNTH_SIZING: True

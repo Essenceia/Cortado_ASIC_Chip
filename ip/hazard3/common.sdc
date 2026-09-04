@@ -61,3 +61,11 @@ foreach flop $scan_flops {
 }
 
 puts "\[SCANMAP\] Finished burning of the infidels" 
+
+
+# Propage clock
+if { [info exists ::env(OPENLANE_SDC_IDEAL_CLOCKS)] && $::env(OPENLANE_SDC_IDEAL_CLOCKS) } {
+    unset_propagated_clock [all_clocks]
+} else {
+    set_propagated_clock [all_clocks]
+}

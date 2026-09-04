@@ -77,11 +77,11 @@ soc_synth_explore soc_extern_rf_synth_explore rf_synth_explore: %_synth_explore:
 	librelane $< --flow synthesisexploration 
 .PHONY:soc_synth_explore rf_synth_explore 
 
-%-librelane-openroad: %_config_merged.yaml
+soc-librelane-openroad soc_extern_rf-librelane-openroad rf-librelane-openroad:%-librelane-openroad: %_config_merged.yaml
 	librelane $< --last-run --flow OpenInOpenROAD
 .PHONY: %-librelane-openroad
 
-%-librelane-klayout: %_config_merged.yaml      
+soc-librelane-klayout soc_extern_rf-librelane-klayout rf-librelane-klayout:%-librelane-klayout: %_config_merged.yaml      
 	librelane $< --last-run --flow OpenInKLayout
 .PHONY: %-librelane-klayout
 
