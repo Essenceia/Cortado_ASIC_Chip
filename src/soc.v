@@ -98,7 +98,9 @@ reset_sync dmi_reset_sync_u (
 	.rst_n_out (rst_n_dmi)
 );
 
-// JTAG
+/* JTAG interface 
+dtm_core does the cdc between the JTAG and the DMI(same as core) clk domains
+*/
 wire              dmi_psel;
 wire              dmi_penable;
 wire              dmi_pwrite;
@@ -137,7 +139,7 @@ hazard3_jtag_dtm_core #(
 assign dmi_paddr[1:0] = 2'b00;
 
 // Debug Module
-localparam N_HARTS = 1;
+localparam N_HARTS = 1; // single hart: single core system 
 localparam XLEN = 32;
 
 wire                      sys_reset_req;
@@ -172,8 +174,8 @@ wire [31:0]               sbus_rdata;
 
 hazard3_dm #(
 	.N_HARTS      (N_HARTS),
-	.HAVE_SBA     (0),
-	.NEXT_DM_ADDR (0)
+	.NEXT_DM_ADDR (0),
+	.HAVE_SBA     (1) // has system bus access 
 ) dm (
 	.clk                         (clk),
 	.rst_n                       (rst_n),
@@ -187,7 +189,7 @@ hazard3_dm #(
 	.dmi_pready                  (dmi_pready),
 	.dmi_pslverr                 (dmi_pslverr),
 
-	.sys_reset_req               (sys_reset_req),
+	.sys_reset_req               (sys_reset_req),//ndmreset
 	.sys_reset_done              (sys_reset_done),
 	.hart_reset_req              (hart_reset_req),
 	.hart_reset_done             (hart_reset_done),
@@ -197,17 +199,20 @@ hazard3_dm #(
 	.hart_req_resume             (hart_req_resume),
 	.hart_halted                 (hart_halted),
 	.hart_running                (hart_running),
-
+	
+	// access to data0 CSR core internal - TODO: do I need CSR ?  
 	.hart_data0_rdata            (hart_data0_rdata),
 	.hart_data0_wdata            (hart_data0_wdata),
 	.hart_data0_wen              (hart_data0_wen),
 
+	// core instruction injection
 	.hart_instr_data             (hart_instr_data),
 	.hart_instr_data_vld         (hart_instr_data_vld),
 	.hart_instr_data_rdy         (hart_instr_data_rdy),
 	.hart_instr_caught_exception (hart_instr_caught_exception),
 	.hart_instr_caught_ebreak    (hart_instr_caught_ebreak),
 
+	// debugger system bus access 
 	.sbus_addr                   (sbus_addr),
 	.sbus_write                  (sbus_write),
 	.sbus_size                   (sbus_size),
@@ -328,7 +333,7 @@ hazard3_cpu_1port #(
 	.dbg_instr_caught_exception (hart_instr_caught_exception),
 	.dbg_instr_caught_ebreak    (hart_instr_caught_ebreak),
 
-	// debug access to shared bus 
+	// debug access to system bus 
 	.dbg_sbus_addr              (sbus_addr),
 	.dbg_sbus_write             (sbus_write),
 	.dbg_sbus_size              (sbus_size),
