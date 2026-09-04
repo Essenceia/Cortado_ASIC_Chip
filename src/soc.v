@@ -55,10 +55,6 @@ wire dbg_sbus_rdy_unused;
 wire dbg_sbus_err_unused; 
 wire [W_DATA-1:0] dbg_sbus_rdata_unused;
 
-reg rst_core_n; 
-always @(posedge clk) 
-	rst_core_n <= rst_n; 
-
 `ifdef EXTERNAL_REGILE
 // external regfile
 wire [W_REGADDR-1:0] rf_raddr1; 
@@ -72,7 +68,7 @@ hazard3_regfile_1w2r #(
 `include "hazard3_config_inst.vh"
 ) regs (
 	.clk    (clk),
-	.rst_n  (rst_core_n),
+	.rst_n  (rst_n_cpu),
 	// On downstream stall, we feed D's addresses back into regfile
 	// so that output does not change.
 	// GF180MCU: use fine rather than coarse predecode as the we rely on the
@@ -90,7 +86,7 @@ hazard3_regfile_1w2r #(
 // jtag tap can force hard reset
 wire rst_n_dmi;
 wire dmihardreset_req;
-wire assert_dmi_reset = ~rst_core_n | dmihardreset_req;
+wire assert_dmi_reset = ~rst_n | dmihardreset_req;
 
 reset_sync dmi_reset_sync_u (
 	.clk       (clk),
@@ -229,6 +225,24 @@ hazard3_dm #(
 	.sbus_rdata                  (sbus_rdata)
 );
 
+// Generate resynchronised reset for CPU based on upstream system reset and on
+// system/hart reset requests from DM.
+
+wire assert_cpu_reset = ~rst_n | sys_reset_req | hart_reset_req[0];
+wire rst_n_cpu;
+
+reset_sync cpu_reset_sync (
+	.clk       (clk),
+	.rst_n_in  (!assert_cpu_reset),
+	.rst_n_out (rst_n_cpu)
+);
+
+// Still some work to be done on the reset handshake -- this ought to be
+// resynchronised to DM's reset domain here, and the DM should wait for a
+// rising edge after it has asserted the reset pulse, to make sure the tail
+// of the previous "done" is not passed on.
+assign sys_reset_done = rst_n_cpu; // TODO: stall on eth rst if need be
+assign hart_reset_done = rst_n_cpu;
 
 // core  
 hazard3_cpu_1port #(
@@ -282,7 +296,7 @@ hazard3_cpu_1port #(
 ) cpu (
 	.clk                        (clk),
 	.clk_always_on              (clk),
-	.rst_n                      (rst_core_n),
+	.rst_n                      (rst_n_cpu),
 
 	.pwrup_req                  (pwrup_req),
 	.pwrup_ack                  (pwrup_req),   // Tied back
