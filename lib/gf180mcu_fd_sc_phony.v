@@ -8,7 +8,7 @@ module gf180mcu_fd_sc_sdffq(
 	input  wire D, 
 	input  wire SI, 
 	input  wire SE, 
-	output wire Q	
+	output reg Q	
 );
 always @(posedge CLK) begin
 	if (SE) Q <= SI;
@@ -21,7 +21,7 @@ module gf180mcu_fd_sc_mcu9t5v0__sdffq_1(
 	input  wire D, 
 	input  wire SI, 
 	input  wire SE, 
-	output wire Q	
+	output reg Q	
 );
 gf180mcu_fd_sc_sdffq m_sdffq(
 .CLK(CLK), .D(D), .SI(SI), .SE(SE), .Q(Q)
@@ -33,7 +33,7 @@ module gf180mcu_fd_sc_mcu9t5v0__sdffq_4(
 	input  wire D, 
 	input  wire SI, 
 	input  wire SE, 
-	output wire Q	
+	output reg Q	
 );
 gf180mcu_fd_sc_sdffq m_sdffq(
 .CLK(CLK), .D(D), .SI(SI), .SE(SE), .Q(Q)
@@ -46,7 +46,7 @@ module gf180mcu_fd_sc_dffrnq(
 	input  wire CLK, 
 	input  wire RN, 
 	input  wire D,
-	output wire Q 
+	output reg Q 
 );
 always @(posedge CLK or negedge RN) 
 	if (~RN) Q <= 1'b0;
@@ -57,7 +57,7 @@ module gf180mcu_fd_sc_mcu7t5v0__dffrnq_1(
 	input  wire CLK, 
 	input  wire RN, 
 	input  wire D,
-	output wire Q 
+	output reg Q 
 );
 gf180mcu_fd_sc_dffrnq m_dffrnq(
 	.CLK (CLK), .RN(RN), .D(D), .Q(Q)
@@ -68,7 +68,7 @@ module gf180mcu_fd_sc_mcu9t5v0__dffrnq_1(
 	input  wire CLK, 
 	input  wire RN, 
 	input  wire D,
-	output wire Q 
+	output reg Q 
 );
 gf180mcu_fd_sc_dffrnq m_dffrnq(
 	.CLK (CLK), .RN(RN), .D(D), .Q(Q)
@@ -101,7 +101,23 @@ gf180mcu_fd_sc_clkbuf m_clkbuf(
 );
 endmodule
 
+module gf180mcu_fd_sc_mcu7t5v0__clkbuf_16(
+	input  wire I, 
+	output wire Z
+);
+gf180mcu_fd_sc_clkbuf m_clkbuf(
+	.I(I), .Z(Z)
+);
+endmodule
 
+module gf180mcu_fd_sc_mcu9t5v0__clkbuf_16(
+	input  wire I, 
+	output wire Z
+);
+gf180mcu_fd_sc_clkbuf m_clkbuf(
+	.I(I), .Z(Z)
+);
+endmodule
 
 
 /* verilator lint_on DECLFILENAME */ 

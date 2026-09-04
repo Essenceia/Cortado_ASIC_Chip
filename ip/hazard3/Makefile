@@ -39,6 +39,9 @@ HAZARD_DEPS+=$(HAZARD_CORE_DIR)/debug/dm/hazard3_dm.v
 
 RTL_DEPS=$(HAZARD_DEPS)
 RTL_DEPS+=$(SRC_DIR)/soc.v
+RTL_DEPS+=$(SRC_DIR)/reset_sync.v
+RTL_DEPS+=$(SRC_DIR)/falsepath_anchor.v
+RTL_DEPS+=$(SRC_DIR)/clkroot_anchor.v
 
 CONFIG_DEPS=$(SRC_DIR)/hazard3_config.vh
 CONFIG_DEPS+=$(HAZARD_CORE_DIR)/$(wildcard *.vh)
@@ -58,8 +61,8 @@ soc_config_merged.yaml soc_extern_rf_config_merged.yaml rf_config_merged.yaml: %
 	cat common_config.yaml > $@
 	cat $< >> $@
 	
-lint: $(RTL_DEPS) 
-	verilator $(WAIVER_FILE) $(LINT_INCLUDE_DIR) $(LINT_DEFINES) --lint-only $(LINT_FLAGS) --no-timing $^ $(PHONY_STD_LIB) --top $(PROJECT_NAME)
+lint:  
+	verilator $(WAIVER_FILE) $(LINT_INCLUDE_DIR) $(LINT_DEFINES) --lint-only $(LINT_FLAGS) --no-timing $(RTL_DEPS) $(PHONY_STD_LIB) --top $(PROJECT_NAME)
 .PHONY: lint
 
 soc_librelane soc_extern_rf_librelane rf_librelane: %-librelane: %_config_merged.yaml $(RTL_DEPS) $(CONFIG_DEPS) common.sdc

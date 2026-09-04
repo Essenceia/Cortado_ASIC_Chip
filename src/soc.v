@@ -15,7 +15,7 @@ module soc #(
 	input wire               rst_n,
 
 	// from jtag tap
-	input  wire                  tck,
+	input  wire                  tck_i,
 	input  wire                  trst_n,
 	input  wire                  dr_wen_i,
 	input  wire                  dr_ren_i,
@@ -101,14 +101,20 @@ reset_sync dmi_reset_sync_u (
 /* JTAG interface 
 dtm_core does the cdc between the JTAG and the DMI(same as core) clk domains
 */
-wire              dmi_psel;
-wire              dmi_penable;
-wire              dmi_pwrite;
-wire [8:0]        dmi_paddr;
-wire [31:0]       dmi_pwdata;
-wire [31:0]       dmi_prdata;
-wire              dmi_pready;
-wire              dmi_pslverr;
+wire        tck; // anchored clk
+wire        dmi_psel;
+wire        dmi_penable;
+wire        dmi_pwrite;
+wire [8:0]  dmi_paddr;
+wire [31:0] dmi_pwdata;
+wire [31:0] dmi_prdata;
+wire        dmi_pready;
+wire        dmi_pslverr;
+
+clkroot_anchor m_clkroot_tck(
+	.i(tck_i), 
+	.z(tck)
+);
 
 hazard3_jtag_dtm_core #(
 	.DTMCS_IDLE_HINT (DTMCS_IDLE_HINT),
