@@ -1,8 +1,7 @@
 `verilator_config 
 
 lint_off -rule TIMESCALEMOD -file "*" 
-lint_off -rule UNUSEDPARAM -file "*hdl/hazard3*" 
-lint_off -rule UNUSEDSIGNAL -file "*hdl/hazard3*" 
-lint_off -rule UNUSEDPARAM  -file "*hazard3_config.vh" 
+lint_off -rule UNUSEDPARAM -file "*hazard3*hdl*" 
+lint_off -rule UNUSEDSIGNAL -file "*hazard3*hdl*" 
 lint_off -rule UNUSEDSIGNAL -file "*" -match "Signal is not used: 'debug_*"
 lint_off -rule UNUSEDSIGNAL -file "*" -match "Signal is not used: '*_unused"

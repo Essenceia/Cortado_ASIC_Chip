@@ -13,6 +13,7 @@
 // hazard3_config_inst.vh to propagate the parameter through module
 // instantiations.
 
+/* verilator lint_off UNUSEDPARAM */
 // ----------------------------------------------------------------------------
 // Reset state configuration
 
@@ -257,3 +258,6 @@ parameter MTVEC_WMASK         = 32'hfffffffd,
 
 parameter W_ADDR              = 32,   // Do not modify
 parameter W_DATA              = 32    // Do not modify
+
+/* verilator lint_on UNUSEDPARAM */
+
