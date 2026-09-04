@@ -5,6 +5,9 @@
 `default_nettype none
 
 module soc #(
+	parameter [3:0]  TAP_VERSION_NUM = 4'd3, // tapeout 3 featuring a custom jtag tap
+	parameter [15:0] TAP_PART_NUM = 16'hbeef,
+	parameter [10:0] TAP_MANIFACTURE_ID = 11'h6b, // continuing the inside joke
 	`include "hazard3_config.vh"
 ) (
 	input wire               clk,
@@ -90,7 +93,10 @@ hazard3_regfile_1w2r #(
 	.wdata  (rf_wdata),
 	.wen    (rf_wen)
 );
-`endif
+`endif // EXTERNAL_REGFILE
+
+// JTAG 
+localparam [31:0] IDCODE = {VERSION_NUM, PART_NUM, MANIFACTURE_ID, 1'b1};
  
 hazard3_cpu_1port #(
 	// These must have the values given here for you to end up with a useful SoC:
