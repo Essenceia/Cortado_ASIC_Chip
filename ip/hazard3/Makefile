@@ -35,6 +35,7 @@ HAZARD_DEPS+=$(HAZARD_CORE_DIR)/debug/cdc/hazard3_sync_1bit.v
 HAZARD_DEPS+=$(HAZARD_CORE_DIR)/debug/cdc/hazard3_reset_sync.v
 HAZARD_DEPS+=$(HAZARD_CORE_DIR)/debug/cdc/hazard3_apb_async_bridge.v
 HAZARD_DEPS+=$(HAZARD_CORE_DIR)/debug/dtm/hazard3_jtag_dtm_core.v
+HAZARD_DEPS+=$(HAZARD_CORE_DIR)/debug/dm/hazard3_dm.v
 
 RTL_DEPS=$(HAZARD_DEPS)
 RTL_DEPS+=$(SRC_DIR)/soc.v
@@ -49,6 +50,7 @@ LINT_DEFINES = -DVERILATOR_LINT=1 -DGF180MCU=1 #-DEXTERNAL_REGFILE
 
 LINT_INCLUDE_DIR = -y $(SRC_DIR) -y $(HAZARD_CORE_DIR) 
 LINT_INCLUDE_DIR += -y $(HAZARD_CORE_DIR)/debug/cdc -y $(HAZARD_CORE_DIR)/debug/dtm
+LINT_INCLUDE_DIR += -y $(HAZARD_CORE_DIR)/debug/dm
 LINT_INCLUDE_DIR += -y $(PHONY_STD_PATH)
 
 # generate merged config files

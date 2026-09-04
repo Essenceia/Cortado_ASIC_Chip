@@ -88,6 +88,7 @@ hazard3_regfile_1w2r #(
 `endif // EXTERNAL_REGFILE
 
 // jtag tap can force hard reset
+wire rst_n_dmi;
 wire dmihardreset_req;
 wire assert_dmi_reset = ~rst_core_n | dmihardreset_req;
 
@@ -114,7 +115,7 @@ hazard3_jtag_dtm_core #(
 	.tck               (tck),
 	.trst_n            (trst_n),
 	.clk_dmi           (clk),
-	.rst_n_dmi         (rst_core_n),
+	.rst_n_dmi         (rst_n_dmi),
 
 	.dmihardreset_req  (dmihardreset_req),
 
