@@ -75,12 +75,31 @@ gf180mcu_fd_sc_dffrnq m_dffrnq(
 );
 endmodule 
 
+// CLKBUF: used for synth anchors - keeping the name I like it
+module gf180mcu_fd_sc_clkbuf(
+	input wire I,
+	output wire Z
+); 
+assign Z = I;
+endmodule
 
+module gf180mcu_fd_sc_mcu7t5v0__clkbuf_1(
+	input  wire I, 
+	output wire Z
+);
+gf180mcu_fd_sc_clkbuf m_clkbuf(
+	.I(I), .Z(Z)
+);
+endmodule
 
-
-
-
-
+module gf180mcu_fd_sc_mcu9t5v0__clkbuf_1(
+	input  wire I, 
+	output wire Z
+);
+gf180mcu_fd_sc_clkbuf m_clkbuf(
+	.I(I), .Z(Z)
+);
+endmodule
 
 
 
