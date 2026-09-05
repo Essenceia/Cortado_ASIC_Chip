@@ -34,6 +34,7 @@ HAZARD_DEPS+=$(HAZARD_CORE_DIR)/hazard3_triggers.v
 HAZARD_DEPS+=$(HAZARD_CORE_DIR)/debug/cdc/hazard3_sync_1bit.v
 HAZARD_DEPS+=$(HAZARD_CORE_DIR)/debug/cdc/hazard3_reset_sync.v
 HAZARD_DEPS+=$(HAZARD_CORE_DIR)/debug/cdc/hazard3_apb_async_bridge.v
+HAZARD_DEPS+=$(HAZARD_CORE_DIR)/debug/dtm/hazard3_jtag_dtm.v
 HAZARD_DEPS+=$(HAZARD_CORE_DIR)/debug/dtm/hazard3_jtag_dtm_core.v
 HAZARD_DEPS+=$(HAZARD_CORE_DIR)/debug/dm/hazard3_dm.v
 

@@ -5,10 +5,9 @@
 `default_nettype none
 
 module soc #(
-	parameter  W_PADDR         = 9,
-	localparam ABITS           = W_PADDR - 2, // do not modify
-	localparam W_DR_SHIFT      = ABITS + 32 + 2, // seriously don't touch
-	parameter  DTMCS_IDLE_HINT = 3'd4,
+	parameter [3:0]  VERSION_NUM    = 4'h3,
+	parameter [15:0] PART_NUM       = 16'hbeef,
+	parameter [10:0] MANIFACTURE_ID = 11'h6b,	
 	`include "hazard3_config.vh"
 ) (
 	input wire               clk,
@@ -17,11 +16,9 @@ module soc #(
 	// from jtag tap
 	input  wire                  tck_i,
 	input  wire                  trst_n,
-	input  wire                  dr_wen_i,
-	input  wire                  dr_ren_i,
-	input  wire                  dr_sel_dmi_ndtmcs_i, 
-	input  wire [W_DR_SHIFT-1:0] dr_wdata_i,
-	output wire [W_DR_SHIFT-1:0] dr_rdata_o,
+	input  wire                  tdi_i,
+	input  wire                  tms_i,
+	output wire                  tdo_o,
 
 	// AHB5 Master port
 	output reg  [W_ADDR-1:0]  haddr_o,
@@ -112,33 +109,29 @@ clkroot_anchor m_clkroot_tck(
 	.z(tck)
 );
 
-hazard3_jtag_dtm_core #(
-	.DTMCS_IDLE_HINT (DTMCS_IDLE_HINT),
-	.W_ADDR(ABITS)
-) dtm_core (
-	.tck               (tck),
-	.trst_n            (trst_n),
-	.clk_dmi           (clk),
-	.rst_n_dmi         (rst_n_dmi),
+hazard3_jtag_dtm #(
+	.IDCODE({VERSION_NUM, PART_NUM, MANIFACTURE_ID, 1'b1})
+) dtm_u (
+	.tck              (tck),
+	.trst_n           (trst_n),
+	.tms              (tms_i),
+	.tdi              (tdi_i),
+	.tdo              (tdo_o),
 
-	.dmihardreset_req  (dmihardreset_req),
+	.dmihardreset_req (dmihardreset_req),
 
-	.dr_wen            (dr_wen_i),
-	.dr_ren            (dr_ren_i),
-	.dr_sel_dmi_ndtmcs (dr_sel_dmi_ndtmcs_i),
-	.dr_wdata          (dr_wdata_i),
-	.dr_rdata          (dr_rdata_o),
+	.clk_dmi          (clk),
+	.rst_n_dmi        (rst_n_dmi),
 
-	.dmi_psel          (dmi_psel),
-	.dmi_penable       (dmi_penable),
-	.dmi_pwrite        (dmi_pwrite),
-	.dmi_paddr         (dmi_paddr[W_PADDR-1:2]),
-	.dmi_pwdata        (dmi_pwdata),
-	.dmi_prdata        (dmi_prdata),
-	.dmi_pready        (dmi_pready),
-	.dmi_pslverr       (dmi_pslverr)
+	.dmi_psel         (dmi_psel),
+	.dmi_penable      (dmi_penable),
+	.dmi_pwrite       (dmi_pwrite),
+	.dmi_paddr        (dmi_paddr),
+	.dmi_pwdata       (dmi_pwdata),
+	.dmi_prdata       (dmi_prdata),
+	.dmi_pready       (dmi_pready),
+	.dmi_pslverr      (dmi_pslverr)
 );
-assign dmi_paddr[1:0] = 2'b00;
 
 // Debug Module
 localparam N_HARTS = 1; // single hart: single core system 
@@ -202,12 +195,13 @@ hazard3_dm #(
 	.hart_halted                 (hart_halted),
 	.hart_running                (hart_running),
 	
-	// access to data0 CSR core internal - TODO: do I need CSR ?  
+	// access to data0 CSR core internal, used for data transfer of GPR for debug  
 	.hart_data0_rdata            (hart_data0_rdata),
 	.hart_data0_wdata            (hart_data0_wdata),
 	.hart_data0_wen              (hart_data0_wen),
 
-	// core instruction injection
+	// core instruction injection of abstract commands for debug register
+	// access
 	.hart_instr_data             (hart_instr_data),
 	.hart_instr_data_vld         (hart_instr_data_vld),
 	.hart_instr_data_rdy         (hart_instr_data_rdy),
