@@ -2,24 +2,18 @@
 # Credit: some code and comments borrowed from RISCBoy-180, ofcourse I stole the comment
 # what did you expect ? 
 source $::env(SCRIPTS_DIR)/base.sdc
-
-set TCK_MHZ 1
-set TCK_PERIOD [expr 1000.0/ $TCK_MHZ]
-set tck_name tck
-
-
 # TODO: do we want to increase max fanout ? max is currently 10 
 # set_max_fanout 16 [current_design] 
 
 # creating clocks 
 # sourcing base.sdc, will create main clk
-set clk_name [llength $::env(CLOCK_PORT)]
+set clk_name [lindex $::env(CLOCK_PORT) 0]
 set CLK_PERIOD $::env(CLOCK_PERIOD) 
 
 # jtag clk
-create_clock [get_pins *m_clkroot_tck.magic_clkroot_anchor_u/Z] \
-	-name $tck_name \
-	-period $TCK_PERIOD
+read_sdc $::env(DESIGN_DIR)/jtag.sdc
+puts "tck name $tck_name"
+puts "tck period $TCK_PERIOD"
 
 # CDC 
 proc cdc_maxdelay {clk_from clk_to period_to} {
@@ -37,7 +31,7 @@ cdc_maxdelay $tck_name $clk_name $CLK_PERIOD
 cdc_maxdelay $clk_name $tck_name $TCK_PERIOD
 
 # Apply RTL-inserted false path constraints (setup/hold only, still constrain slew)
-set_false_path -setup -hold -through [get_pins *.magic_falsepath_anchor_u/Z] 
+set_false_path -setup -hold -through [get_pins -hierarchical -regexp {.*magic_falsepath_anchor_u/Z}] 
 
 # SDFF 
 # The Machine Spirit is angry. Brother, get the holy oils
