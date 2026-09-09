@@ -12,7 +12,10 @@ SoC - add minimum featureset:
 	- External memory for storing program 
 	- SRAM for current context 
 	- both volatile and none-volatile memory can be made available though (q)spi
-- MACSec AMBA endpoint  
+- MACSec AMBA?/APB? endpoint  
 
-- replace hazard jtag dtm with my own implementation 
-	- add dmi instr + widden ir/addr/data
+- ~replace hazard jtag dtm with my own implementation~ change of plan, reuse tap and expose status regs over sysbus
+	- ~add dmi instr + widden ir/addr/data~
+	- add support for boundary scan (if used)
+
+- add APB endpoing
