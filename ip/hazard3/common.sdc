@@ -12,8 +12,6 @@ set CLK_PERIOD $::env(CLOCK_PERIOD)
 
 # jtag clk
 read_sdc $::env(DESIGN_DIR)/jtag.sdc
-puts "tck name $tck_name"
-puts "tck period $TCK_PERIOD"
 
 # CDC 
 proc cdc_maxdelay {clk_from clk_to period_to} {

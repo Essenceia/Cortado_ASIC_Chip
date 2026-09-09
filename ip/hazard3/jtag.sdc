@@ -1,3 +1,4 @@
+set_units -time "ns"
 set TCK_MHZ 1
 set TCK_PERIOD [expr 1000.0/ $TCK_MHZ]
 set tck_name tck
@@ -12,7 +13,10 @@ create_clock [get_pins -hierarchical -regexp {.*m_clkroot_tck.magic_clkroot_anch
 	-period $TCK_PERIOD
 
 # pins 
-puts "\[INFO\] Setting IO delay $tck_name"
+puts "\[INFO\] Setting delay for $tck_name"
+puts "\[INFO\] $tck_name frequency $TCK_MHZ MHz"
+puts "\[INFO\] $tck_name period $TCK_PERIOD ns"
+puts "\[INFO\] $tck_name delay constraints $::env(IO_DELAY_CONSTRAINT) %"
 set input_delay_value [expr $TCK_PERIOD * $::env(IO_DELAY_CONSTRAINT) / 100]
 
 set_input_delay -min 0 -clock $tck_name $tap_input_ports
@@ -21,9 +25,10 @@ set_input_delay -max $input_delay_value -clock $tck_name $tap_input_ports
 # outputs are bidirectional 
 set output_delay_value [expr $TCK_PERIOD * $::env(IO_DELAY_CONSTRAINT) / 100]
 
-#set_input_delay -min 0 -clock $tck_name $tap_output_ports
-#set_input_delay -max $input_delay_value -clock $tck_name $tap_output_ports
 set_output_delay $output_delay_value -clock $tck_name $tap_output_ports
+# not used 
+#set_input_delay -min $input_delay_value -clock $tck_name $tap_output_ports
+#set_input_delay -max $input_delay_value -clock $tck_name $tap_output_ports
 
 #clk constraints
 
@@ -33,4 +38,4 @@ set_clock_uncertainty $::env(CLOCK_UNCERTAINTY_CONSTRAINT) $tck_name
 puts "\[INFO] Setting clock transition for $tck_name to: $::env(CLOCK_TRANSITION_CONSTRAINT)"
 set_clock_transition $::env(CLOCK_TRANSITION_CONSTRAINT) $tck_name
 
-
+puts "all clocks [all_clocks]"
