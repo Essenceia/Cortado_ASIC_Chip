@@ -38,8 +38,8 @@ module soc #(
 
 	// Level-sensitive interrupt sources
 	input wire [NUM_IRQS-1:0] irq_i,       // -> mip.meip
-	input wire                soft_irq_i,  // -> mip.msip
-	input wire                timer_irq_i  // -> mip.mtip
+	input wire                irq_soft_i,  // -> mip.msip
+	input wire                irq_timer_i  // -> mip.mtip
 );
 // tie backs
 wire pwrup_req; 
@@ -361,8 +361,8 @@ hazard3_cpu_1port #(
 	.eco_version                (4'd0),
 
 	.irq                        (irq_i),
-	.soft_irq                   (soft_irq_i),
-	.timer_irq                  (timer_irq_i)
+	.soft_irq                   (irq_soft_i),
+	.timer_irq                  (irq_timer_i)
 );
 
 endmodule
