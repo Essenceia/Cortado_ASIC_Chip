@@ -1,21 +1,25 @@
 Julia's TODO list
 
-SoC - add minimum featureset: 
-- debuger over JTAG : 
-	- TAP 
-	- DM
-	- CDC ( DM <-> DMI ) 
-	- DMI
-- Timer (required) 
-- UART 
-- Memory 
-	- External memory for storing program 
-	- SRAM for current context 
-	- both volatile and none-volatile memory can be made available though (q)spi
-- MACSec AMBA?/APB? endpoint  
+- dropping riscv idea
+- add cpu handoff over pio to the rp2040 core
 
-- ~replace hazard jtag dtm with my own implementation~ change of plan, reuse tap and expose status regs over sysbus
-	- ~add dmi instr + widden ir/addr/data~
-	- add support for boundary scan (if used)
+- CPU handoff 
+	- make asic as an SPI slave for configuration from the CPU
+		- configure S-PPIO tag
+			- make inclusion of S-PRIO tag optional
+			- set PTP  
+		- read performance counters: 
+			- pkts: seen, dropped, forwarded to cpu, formwarded over network 
+	- custom parallel buses for packet forwarding
+		- ASIC -> CPU: 
+			- 2b data
+			- early valid
+			- valid
+		- CPU -> ASIC: 
+			- clk (also used for ASIC -> CPU direction)
+			- 2b data
+			- valid (used as request) 
+			- accept (ASIC -> CPU)  
 
-- add APB endpoing
+
+- Identify structure of ethtype offload filter: read up about how device adversises there MAC on the network, what do I need for MACSec ? 
