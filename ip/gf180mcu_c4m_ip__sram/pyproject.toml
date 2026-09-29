@@ -1,0 +1,28 @@
+[project]
+name = "arrasram-testchip"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "amaranth>=0.5.8",
+    "c4m-flexcell",
+    "c4m-flexmem",
+    "c4m-pdk-gf180mcu>=0.0.11",
+    "doit>=0.37.0",
+    "pdkmaster",
+    "pdkmaster-io-spice",
+    "tomli>=2.4.1",
+]
+
+[tool.uv.sources]
+pdkmaster = { git = "https://gitlab.com/Chips4Makers/PDKMaster.git", rev = "dev_SRAM" }
+pdkmaster-io-spice = { git = "https://gitlab.com/Chips4Makers/pdkmaster-io-spice.git", rev = "dev_SRAM" }
+c4m-pdk-gf180mcu = { git = "https://gitlab.com/Chips4Makers/c4m-pdk-gf180mcu.git", rev = "dev" }
+c4m-flexmem = { git = "https://gitlab.com/Chips4Makers/c4m-flexmem.git", rev = "dev_SRAM" }
+c4m-flexcell = { git = "https://gitlab.com/Chips4Makers/c4m-flexcell.git", rev = "dev" }
+
+[dependency-groups]
+dev = [
+    "amaranth-yosys>=0.50.0.0.post125",
+]
