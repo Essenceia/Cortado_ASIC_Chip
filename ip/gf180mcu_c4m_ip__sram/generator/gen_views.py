@@ -14,15 +14,14 @@ from c4m.pdk.gf180mcu import (
 # getting env parameter, checking if we want to use SRAM design rules or standard rules 
 SRAM_RULES=os.getenv("SRAM_RULES", False)
 
-memlib = Library(name="gf180mcu_c4m__sram3v3")
-
 # Generate single port SRAM only 
+memlib = Library(name="gf180mcu_c4m_ip__sram3v3")
 
 if SRAM_RULES:
-    _fab = SPSRAMFactory(lib=memlib, sram_rules=True, name_prefix="SP6TR")
+    _fab = SPSRAMFactory(lib=memlib, sram_rules=True, name_prefix="")
     rule_str = "using SRAM compact design rules" 
 else: 
-    _fab = SPSRAMFactory(lib=memlib)
+    _fab = SPSRAMFactory(lib=memlib, sram_rules=False, name_prefix="SP6TB")
     rule_str = ""
 
 print("Generating 3.3V SRAMs "+rule_str)

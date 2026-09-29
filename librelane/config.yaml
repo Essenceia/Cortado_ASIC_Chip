@@ -44,13 +44,6 @@ VERILOG_FILES:
 - dir::../src/coffeepot/src/lookup.v
 - dir::../src/coffeepot/src/ttnn_timer.v
 - dir::../src/coffeepot/src/replacement_policy.v
-- dir::../src/coldbrew/src/coldbrew.v
-- dir::../src/coldbrew/src/crc_8.v
-- dir::../src/coldbrew/src/death_of_the_universe_counter.v
-- dir::../src/coldbrew/src/broadcast_timer.v
-- dir::../src/coldbrew/src/mac_conf.v
-- dir::../src/coldbrew/src/mac_rx.v
-- dir::../src/coldbrew/src/mac_tx.v
 
 # Synth directived for timing debug 
 SYNTH_AUTONAME: true 

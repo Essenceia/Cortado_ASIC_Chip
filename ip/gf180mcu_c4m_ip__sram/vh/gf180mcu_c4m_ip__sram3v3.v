@@ -1,5 +1,5 @@
 (* blackbox *)
-module SP6Tgf180mcu_c4m_ip__sram3v3_128x8(a, d, we, clk, q);
+module SP6TBgf180mcu_c4m_ip__sram3v3_128x8(a, d, we, clk, q);
   input wire [6:0] a;
   input wire [7:0] d;
   input wire [0:0] we;
@@ -20,7 +20,7 @@ module SP6Tgf180mcu_c4m_ip__sram3v3_128x8(a, d, we, clk, q);
 endmodule
 
 (* blackbox *)
-module SP6Tgf180mcu_c4m_ip__sram3v3_256x8(a, d, we, clk, q);
+module SP6TBgf180mcu_c4m_ip__sram3v3_256x8(a, d, we, clk, q);
   input wire [7:0] a;
   input wire [7:0] d;
   input wire [0:0] we;
@@ -41,7 +41,7 @@ module SP6Tgf180mcu_c4m_ip__sram3v3_256x8(a, d, we, clk, q);
 endmodule
 
 (* blackbox *)
-module SP6Tgf180mcu_c4m_ip__sram3v3_256x16(a, d, we, clk, q);
+module SP6TBgf180mcu_c4m_ip__sram3v3_256x16(a, d, we, clk, q);
   input wire [7:0] a;
   input wire [15:0] d;
   input wire [1:0] we;

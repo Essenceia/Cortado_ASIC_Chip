@@ -77,3 +77,18 @@ MACROS:
       wafer_space_logo:
         location: [26, "expr::$DIE_AREA[3] - 169.25"]
         orientation: N
+
+  SP6TBgf180mcu_c4m_ip__sram3v3_128x8: 
+    gds: 
+      - dir::../ip/gf180mcu_c4m_ip__sram/gds/gf180mcu_c4m_ip__sram3v3.gds
+    lef: 
+      - dir::../ip/gf180mcu_c4m_ip__sram/lef/gf180mcu_c4m_ip__sram3v3.lef
+    vh:
+      - dir::../ip/gf180mcu_c4m_ip__sram/vh/gf180mcu_c4m_ip__sram3v3.v
+    instances:
+      chip_core.m_sram128x8:
+        location: [100, 100]
+        orientation: W
+
+PDN_MACRO_CONNECTIONS:
+- "i_chip_core.m_sram128x8 VDD VSS vdd vss"

@@ -31,6 +31,9 @@ PAD ?= gf180mcu_fd_io
 # Available SRAM macros:
 # gf180mcu_fd_ip_sram
 # gf180mcu_ocd_ip_sram
+# gf180mcu_c4m_ip_sram
+
+SRAM=gf180mcu_c4m_ip_sram
 
 ifeq ($(SRAM),default)
     SRAM = gf180mcu_fd_ip_sram

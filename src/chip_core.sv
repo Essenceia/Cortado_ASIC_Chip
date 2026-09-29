@@ -145,6 +145,8 @@ assign rst_n_dly = rst_n;
 `endif
 
 
+
+// IP 
 coffeepot #(.PORT_CNT(SWITCH_PORT_CNT), .PHY_W(PHY_W), .HAS_TX_PHASE(0)) m_coffeepot(
 	.clk(clk), 
 	.rst_n(rst_n_dly), 
@@ -170,6 +172,23 @@ assign phy_rx_unused     = phy_rx[PHY_W*PORT_CNT-1-:PHY_W];
 
 assign phy_tx_v[PORT_CNT-1] = 1'b0;
 assign phy_tx[PHY_W*PORT_CNT-1-:PHY_W] = {PHY_W{1'b0}};
+
+
+// SRAM for testing 
+wire [6:0] sram128x8_addr; 
+wire [7:0] sram128x8_data_wr; 
+wire [7:0] sram128x8_data_rd_unused;
+
+assign sram128x8_addr = 7'd0; 
+assign sram128x8_data_wr = 8'hff; 
+(* keep *) 
+SP6TBgf180mcu_c4m_ip__sram3v3_128x8 m_sram128x8(
+.clk(clk), 
+.we(1'b1), 
+.a(sram128x8_addr),
+.d(sram128x8_data_wr), 
+.q(sram128x8_data_rd_unused)
+);
 
 endmodule
 
