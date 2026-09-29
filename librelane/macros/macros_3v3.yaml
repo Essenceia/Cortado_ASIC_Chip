@@ -86,7 +86,7 @@ MACROS:
     vh:
       - dir::../ip/gf180mcu_c4m_ip__sram/vh/gf180mcu_c4m_ip__sram3v3.v
     instances:
-      chip_core.m_sram128x8:
+      i_chip_top.m_sram128x8:
         location: [100, 100]
         orientation: W
 
