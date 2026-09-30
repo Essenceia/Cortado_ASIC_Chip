@@ -202,3 +202,5 @@ add_pdn_connect \
     -grid macro \
     -layers "$::env(PDN_VERTICAL_LAYER) $::env(PDN_HORIZONTAL_LAYER)"
 
+# include sram3v3 pdn delievery 
+source [file join [file dirname [info script]] "pdn_c4m_sram3v3.tcl"]
