@@ -122,7 +122,6 @@ endgenerate
 localparam OUT_PADS_CNT = PORT_CNT*RMII_OUT_W;
 localparam UNUSED_BIDIR_PADS_CNT = NUM_BIDIR_PADS - OUT_PADS_CNT; 
 
-assign bidir_out[NUM_BIDIR_PADS-1-:UNUSED_BIDIR_PADS_CNT] = {UNUSED_BIDIR_PADS_CNT{1'b0}};
 assign bidir_oe[NUM_BIDIR_PADS-1-:UNUSED_BIDIR_PADS_CNT]  = {UNUSED_BIDIR_PADS_CNT{1'b1}};
 assign bidir_cs[NUM_BIDIR_PADS-1-:UNUSED_BIDIR_PADS_CNT]  = {UNUSED_BIDIR_PADS_CNT{1'b0}};
 assign bidir_sl[NUM_BIDIR_PADS-1-:UNUSED_BIDIR_PADS_CNT]  = {UNUSED_BIDIR_PADS_CNT{1'b0}};
@@ -177,18 +176,19 @@ assign phy_tx[PHY_W*PORT_CNT-1-:PHY_W] = {PHY_W{1'b0}};
 // SRAM for testing 
 wire [6:0] sram128x8_addr; 
 wire [7:0] sram128x8_data_wr; 
-wire [7:0] sram128x8_data_rd_unused;
+wire [7:0] sram128x8_data_rd;
 
 assign sram128x8_addr = 7'd0; 
 assign sram128x8_data_wr = 8'hff; 
-(* keep *) 
-SP6TBgf180mcu_c4m_ip__sram3v3_128x8 m_sram128x8(
+(* keep *) (* keep_hierarchy *) SP6TBgf180mcu_c4m_ip__sram3v3_128x8 m_sram128x8(
 .clk(clk), 
 .we(1'b1), 
 .a(sram128x8_addr),
 .d(sram128x8_data_wr), 
-.q(sram128x8_data_rd_unused)
+.q(sram128x8_data_rd)
 );
+// TODO this is temporary, reconnect property
+assign bidir_out[NUM_BIDIR_PADS-1-:UNUSED_BIDIR_PADS_CNT] = {2{|sram128x8_data_rd}};
 
 endmodule
 

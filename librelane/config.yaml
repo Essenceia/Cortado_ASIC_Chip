@@ -90,6 +90,10 @@ CELL_LIBS:
 # USE_SLANG: True
 # SLANG_ARGUMENTS: ['--keep-hierarchy']
 
+# hierachy 
+SYNTH_HIERARCHY_MODE: "flatten"
+ERROR_ON_UNMAPPED_CELLS: false # do not error on unmapped sram/chip_core
+
 # Slightly smaller file sizes
 PRIMARY_GDSII_STREAMOUT_TOOL: klayout
 

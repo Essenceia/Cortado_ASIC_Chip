@@ -88,4 +88,4 @@ set ::env(PHY_RX_PINS) [get_ports {input_PAD[*]}]
 set ::env(PHY_TX_PINS) [get_ports {bidir_PAD[*]}]
 set ::env(OUTPUT_CLOCK_TX) $clock_port 
 
-read_sdc $::env(DESIGN_DIR)/../src/coldbrew/src/lan8720a.sdc
+read_sdc $::env(DESIGN_DIR)/../librelane/lan8720a.sdc

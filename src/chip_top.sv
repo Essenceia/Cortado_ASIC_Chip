@@ -231,12 +231,11 @@ module chip_top #(
     endgenerate
 
     // Core design
-
     chip_core #(
         .NUM_INPUT_PADS  (NUM_INPUT_PADS),
         .NUM_BIDIR_PADS  (NUM_BIDIR_PADS),
         .NUM_ANALOG_PADS (NUM_ANALOG_PADS)
-    ) i_chip_core (
+    ) m_chip_core (
         `ifdef USE_POWER_PINS
         .VDD        (VDD),
         .VSS        (VSS),
