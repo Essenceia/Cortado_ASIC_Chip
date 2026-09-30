@@ -18,7 +18,7 @@ module chip_core #(
     parameter NUM_ANALOG_PADS,
 `endif
 	localparam PORT_CNT        = 5, // total port cnd
-	localparam SWITCH_PORT_CNT = PORT_CNT - 1,
+	localparam SWITCH_PORT_CNT = 4,
 	localparam PHY_W           = 2
     )(
     `ifdef USE_POWER_PINS
@@ -182,7 +182,7 @@ wire sram_test_rd;
 );
 
 // TODO this is temporary, reconnect property
-assign bidir_out[NUM_BIDIR_PADS-1-:UNUSED_BIDIR_PADS_CNT] = {2{sram_test_rd}};
+assign bidir_out[NUM_BIDIR_PADS-1-:PHY_W] = {2{sram_test_rd}};
 
 endmodule
 

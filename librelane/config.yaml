@@ -44,6 +44,7 @@ VERILOG_FILES:
 - dir::../src/coffeepot/src/lookup.v
 - dir::../src/coffeepot/src/ttnn_timer.v
 - dir::../src/coffeepot/src/replacement_policy.v
+- dir::../src/sram_test.v 
 
 # Synth directived for timing debug 
 SYNTH_AUTONAME: true 

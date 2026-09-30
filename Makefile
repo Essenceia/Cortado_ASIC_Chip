@@ -144,6 +144,8 @@ COFFEEPOT_SRC_DIR := $(SRC_DIR)/coffeepot/src
 COLDBREW_SRC_DIR := $(SRC_DIR)/coldbrew/src
 EXCLUDE_SRC := $(COLDBREW_SRC_DIR)/utils.v $(COLDBREW_SRC_DIR)/rmii.v $(COFFEEPOT_SRC_DIR)/tx_tt_buffer.v
 
+SRAM_SRC:= ip/gf180mcu_c4m_ip__sram/vh/gf180mcu_c4m_ip__sram3v3.v
+
 CONF := conf
 WAIVER_FILE := waiver.vlt
 
@@ -151,6 +153,7 @@ LINT_FLAGS := -Wall -Wpedantic -Ilib
 
 _entry_deps := $(SRC_DIR)/slot_defines.svh $(SRC_DIR)/chip_core.sv $(wildcard $(COFFEEPOT_SRC_DIR)/*.v) $(wildcard $(COLDBREW_SRC_DIR)/*.v) 
 entry_deps := $(filter-out $(EXCLUDE_SRC), $(_entry_deps))
+entry_deps += $(SRAM_SRC) 
 
 lint: $(entry_deps)
 	verilator $(CONF)/$(WAIVER_FILE) -y $(SRC_DIR) -DVERILATOR_LINT=1 --lint-only $(LINT_FLAGS) --no-timing $^ --top $(PROJET_NAME)

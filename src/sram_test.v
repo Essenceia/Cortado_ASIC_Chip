@@ -57,14 +57,14 @@ assign sram256x16_data_wr[1] = {16{d_i}};
 );
 
 // 256x8
-wire       sram256x16_we; 
-wire [7:0] sram256x16_addr; 
-wire [7:0] sram256x16_data_wr; 
-wire [7:0] sram256x16_data_rd;
+wire       sram256x8_we; 
+wire [7:0] sram256x8_addr; 
+wire [7:0] sram256x8_data_wr; 
+wire [7:0] sram256x8_data_rd;
 
-assign sram256x16_we      = d_i;
-assign sram256x16_addr    = {8{d_i}}; 
-assign sram256x16_data_wr = {8{d_i}};
+assign sram256x8_we      = d_i;
+assign sram256x8_addr    = {8{d_i}}; 
+assign sram256x8_data_wr = {8{d_i}};
  
 (* keep *) (* keep_hierarchy *) SP6TBgf180mcu_c4m_ip__sram3v3_256x8 m_sram256x8(
 .clk(clk), 
