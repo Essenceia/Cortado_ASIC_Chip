@@ -87,8 +87,9 @@ MACROS:
       - dir::../ip/gf180mcu_c4m_ip__sram/vh/gf180mcu_c4m_ip__sram3v3.v
     instances:
       m_chip_core.m_sram128x8:
-        location: [100, 100]
+        location: ["expr::$CORE_AREA[0] + 100", "expr::$CORE_AREA[1] + 100"]
         orientation: W
 
+#PDN_CONNECT_MACROS_TO_GRID: True
 PDN_MACRO_CONNECTIONS:
 - "m_chip_core.m_sram128x8 VDD VSS vdd vss"

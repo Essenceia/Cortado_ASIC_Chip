@@ -1,11 +1,11 @@
 # based on  Staf Verhaegen's SRAM pdn
 
-set macros "m_chip_core.m_sram128x8"
-puts "got macros $macros"
+set sram_macro_list "m_chip_core.m_sram128x8"
+puts "got macros $sram_macro_list"
 
 define_pdn_grid \
     -macro \
-    -instances $macros \
+    -instances $sram_macro_list \
     -name sram_macros \
     -starts_with POWER \
     -halo "$::env(PDN_HORIZONTAL_HALO) $::env(PDN_VERTICAL_HALO)"
