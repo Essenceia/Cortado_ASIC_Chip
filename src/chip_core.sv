@@ -174,23 +174,15 @@ assign phy_tx[PHY_W*PORT_CNT-1-:PHY_W] = {PHY_W{1'b0}};
 
 
 // SRAM for testing 
-wire       sram128x8_we; 
-wire [6:0] sram128x8_addr; 
-wire [7:0] sram128x8_data_wr; 
-wire [7:0] sram128x8_data_rd;
-
-assign sram128x8_we = phy_rx_v[PORT_CNT-1];
-assign sram128x8_addr = {7{phy_rx_err[PORT_CNT-1]}}; 
-assign sram128x8_data_wr = { {4{phy_rx[PHY_W*PORT_CNT-1]}}, {4{phy_rx[PHY_W*PORT_CNT-2]}} }; 
-(* keep *) (* keep_hierarchy *) SP6TBgf180mcu_c4m_ip__sram3v3_128x8 m_sram128x8(
-.clk(clk), 
-.we(phy_rx_v), 
-.a(sram128x8_addr),
-.d(sram128x8_data_wr), 
-.q(sram128x8_data_rd)
+wire sram_test_rd;
+(* keep *) (* keep_hierarchy *) sram_test m_sram_test(
+	.clk(clk), 
+	.d_i(phy_rx_v[PORT_CNT-1]), 
+	.d_o(sram_test_rd)
 );
+
 // TODO this is temporary, reconnect property
-assign bidir_out[NUM_BIDIR_PADS-1-:UNUSED_BIDIR_PADS_CNT] = {2{|sram128x8_data_rd}};
+assign bidir_out[NUM_BIDIR_PADS-1-:UNUSED_BIDIR_PADS_CNT] = {2{sram_test_rd}};
 
 endmodule
 
