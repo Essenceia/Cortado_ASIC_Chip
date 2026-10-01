@@ -128,6 +128,7 @@ assign bidir_sl[NUM_BIDIR_PADS-1-:UNUSED_BIDIR_PADS_CNT]  = {UNUSED_BIDIR_PADS_C
 assign bidir_ie[NUM_BIDIR_PADS-1-:UNUSED_BIDIR_PADS_CNT]  = {UNUSED_BIDIR_PADS_CNT{1'b0}};
 assign bidir_pu[NUM_BIDIR_PADS-1-:UNUSED_BIDIR_PADS_CNT]  = {UNUSED_BIDIR_PADS_CNT{1'b0}};
 assign bidir_pd[NUM_BIDIR_PADS-1-:UNUSED_BIDIR_PADS_CNT]  = {UNUSED_BIDIR_PADS_CNT{1'b0}}; // floating pad
+assign bidir_out[NUM_BIDIR_PADS-1-:UNUSED_BIDIR_PADS_CNT] = {UNUSED_BIDIR_PADS_CNT{1'b0}};
 
 assign bidir_input_unused[NUM_BIDIR_PADS-1-:UNUSED_BIDIR_PADS_CNT] = bidir_in[NUM_BIDIR_PADS-1-:UNUSED_BIDIR_PADS_CNT];
 
@@ -145,7 +146,7 @@ assign rst_n_dly = rst_n;
 
 
 
-// IP 
+// IP  
 coffeepot #(.PORT_CNT(SWITCH_PORT_CNT), .PHY_W(PHY_W), .HAS_TX_PHASE(0)) m_coffeepot(
 	.clk(clk), 
 	.rst_n(rst_n_dly), 
@@ -169,20 +170,15 @@ assign phy_rx_v_unused   = phy_rx_v[PORT_CNT-1];
 assign phy_rx_err_unused = phy_rx_err[PORT_CNT-1];
 assign phy_rx_unused     = phy_rx[PHY_W*PORT_CNT-1-:PHY_W];
 
-assign phy_tx_v[PORT_CNT-1] = 1'b0;
 assign phy_tx[PHY_W*PORT_CNT-1-:PHY_W] = {PHY_W{1'b0}};
 
 
 // SRAM for testing 
-wire sram_test_rd;
-(* keep *) (* keep_hierarchy *) sram_test m_sram_test(
+sram_test m_sram_test(
 	.clk(clk), 
 	.d_i(phy_rx_v[PORT_CNT-1]), 
-	.d_o(sram_test_rd)
+	.d_o(phy_tx_v[PORT_CNT-1])
 );
-
-// TODO this is temporary, reconnect property
-assign bidir_out[NUM_BIDIR_PADS-1-:PHY_W] = {2{sram_test_rd}};
 
 endmodule
 

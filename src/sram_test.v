@@ -18,7 +18,7 @@ assign sram128x8_we      = d_i;
 assign sram128x8_addr    = {7{d_i}}; 
 assign sram128x8_data_wr = {8{d_i}};
  
-(* keep *) (* keep_hierarchy *) SP6TBgf180mcu_c4m_ip__sram3v3_128x8 m_sram128x8(
+(* keep *) SP6TBgf180mcu_c4m_ip__sram3v3_128x8 m_sram128x8(
 .clk(clk), 
 .we(sram128x8_we), 
 .a(sram128x8_addr),
@@ -40,7 +40,7 @@ assign sram256x16_we[1]      = d_i;
 assign sram256x16_addr[1]    = {8{d_i}}; 
 assign sram256x16_data_wr[1] = {16{d_i}};
   
-(* keep *) (* keep_hierarchy *) SP6TBgf180mcu_c4m_ip__sram3v3_256x16 m_sram256x16_0(
+(* keep *) SP6TBgf180mcu_c4m_ip__sram3v3_256x16 m_sram256x16_0(
 .clk(clk), 
 .we({2{sram256x16_we[0]}}), 
 .a (sram256x16_addr[0]),
@@ -48,7 +48,7 @@ assign sram256x16_data_wr[1] = {16{d_i}};
 .q (sram256x16_data_rd[0])
 );
 
-(* keep *) (* keep_hierarchy *) SP6TBgf180mcu_c4m_ip__sram3v3_256x16 m_sram256x16_1(
+(* keep *) SP6TBgf180mcu_c4m_ip__sram3v3_256x16 m_sram256x16_1(
 .clk(clk), 
 .we({2{sram256x16_we[1]}}), 
 .a (sram256x16_addr[1]),
@@ -66,7 +66,7 @@ assign sram256x8_we      = d_i;
 assign sram256x8_addr    = {8{d_i}}; 
 assign sram256x8_data_wr = {8{d_i}};
  
-(* keep *) (* keep_hierarchy *) SP6TBgf180mcu_c4m_ip__sram3v3_256x8 m_sram256x8(
+(* keep *) SP6TBgf180mcu_c4m_ip__sram3v3_256x8 m_sram256x8(
 .clk(clk), 
 .we(sram256x8_we), 
 .a (sram256x8_addr),

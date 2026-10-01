@@ -86,10 +86,41 @@ MACROS:
     vh:
       - dir::../ip/gf180mcu_c4m_ip__sram/vh/gf180mcu_c4m_ip__sram3v3.v
     instances:
-      m_chip_core.m_sram128x8:
-        location: ["expr::$CORE_AREA[0] + 100", "expr::$CORE_AREA[1] + 100"]
+      m_chip_core.m_sram_test.m_sram128x8:
+        location: [500, 500]
+        orientation: W
+
+  SP6TBgf180mcu_c4m_ip__sram3v3_256x8: 
+    gds: 
+      - dir::../ip/gf180mcu_c4m_ip__sram/gds/gf180mcu_c4m_ip__sram3v3.gds
+    lef: 
+      - dir::../ip/gf180mcu_c4m_ip__sram/lef/gf180mcu_c4m_ip__sram3v3.lef
+    vh:
+      - dir::../ip/gf180mcu_c4m_ip__sram/vh/gf180mcu_c4m_ip__sram3v3.v
+    instances:
+      m_chip_core.m_sram_test.m_sram256x8:
+        location: [650, 500]
+        orientation: W
+
+
+  SP6TBgf180mcu_c4m_ip__sram3v3_256x16: 
+    gds: 
+      - dir::../ip/gf180mcu_c4m_ip__sram/gds/gf180mcu_c4m_ip__sram3v3.gds
+    lef: 
+      - dir::../ip/gf180mcu_c4m_ip__sram/lef/gf180mcu_c4m_ip__sram3v3.lef
+    vh:
+      - dir::../ip/gf180mcu_c4m_ip__sram/vh/gf180mcu_c4m_ip__sram3v3.v
+    instances:
+      m_chip_core.m_sram_test.m_sram256x16_0:
+        location: [500, 700]
+        orientation: W
+      m_chip_core.m_sram_test.m_sram256x16_1:
+        location: [650, 700]
         orientation: W
 
 #PDN_CONNECT_MACROS_TO_GRID: True
 PDN_MACRO_CONNECTIONS:
-- "m_chip_core.m_sram128x8 VDD VSS vdd vss"
+- "m_chip_core.m_sram_test.m_sram128x8 VDD VSS vdd vss"
+- "m_chip_core.m_sram_test.m_sram256x8 VDD VSS vdd vss"
+- "m_chip_core.m_sram_test.m_sram256x16_0 VDD VSS vdd vss"
+- "m_chip_core.m_sram_test.m_sram256x16_1 VDD VSS vdd vss"

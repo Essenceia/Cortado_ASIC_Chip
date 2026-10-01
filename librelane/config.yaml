@@ -93,9 +93,6 @@ CELL_LIBS:
 
 # hierachy 
 SYNTH_HIERARCHY_MODE: "flatten"
-SYNTH_KEEP_HIERARCHY_INSTANCES:
-- chip_top.m_chip_core
-- chip_top.m_chip_core.m_sram128x8
 ERROR_ON_UNMAPPED_CELLS: false # do not error on unmapped sram/chip_core
 
 # Slightly smaller file sizes
